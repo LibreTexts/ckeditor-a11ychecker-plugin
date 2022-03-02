@@ -1,0 +1,12 @@
+ // force overwirte css settings from MindTouch
+.cke_button_icon.cke_button__a11ybutton_icon {
+    background-image: url(https://test.libretexts.org/alvin/public/ckeditor-a11ychecker/dist/icons/a11ychecker.png) !important;
+    background-position: 0 0px !important;
+    background-size: 16px !important;
+}
+
+.cke_a11yc_focused {
+    outline: 3px solid #ff9f9f !important;
+    background-color: #ffe4e4;
+    font-style: italic;
+}
