@@ -225,15 +225,27 @@ const addBalloonPanel = () => {
 
 				triangleOuter: CKEDITOR.dom.element.createFromHtml( this.templates.triangleOuter.output() ),
 
-				triangleInner: CKEDITOR.dom.element.createFromHtml( this.templates.triangleInner.output() )
+				triangleInner: CKEDITOR.dom.element.createFromHtml( this.templates.triangleInner.output() ),
+
+				contactInfo: CKEDITOR.dom.element.createFromHtml( 
+					`<div style='margin-left: 10px; margin-bottom: 8px; 
+								 padding-left: 6px; 
+								 padding-right: 6px;
+								 color: #6e6e6e;' >
+						Contact ckelibretext@ucdavis.edu for bug reporting. 
+					</div>`)
 			};
+
+			
 
 			// Append UI elements to create a panel.
 			this.parts.panel.append( this.parts.title, 1 );
 			this.parts.panel.append( this.parts.close, 1 );
 			this.parts.panel.append( this.parts.triangleOuter );
 			this.parts.panel.append( this.parts.content );
+			this.parts.panel.append ( this.parts.contactInfo )
 			this.parts.triangleOuter.append( this.parts.triangleInner );
+
 
 			// Register panel children to focusManager (prevent from blurring the editor).
 			this.registerFocusable( this.parts.panel );
@@ -245,6 +257,8 @@ const addBalloonPanel = () => {
 
 			// Append the panel to the global document.
 			CKEDITOR.document.getBody().append( this.parts.panel );
+
+			
 
 			// Set default dimensions of the panel.
 			this.resize( this.width, this.height );
@@ -260,6 +274,8 @@ const addBalloonPanel = () => {
 				this.hide();
 				evt.data.preventDefault();
 			}, this );
+			
+			
 		},
 
 		/**
@@ -299,6 +315,7 @@ const addBalloonPanel = () => {
 		 */
 		blur: function() {
 			this.editor.focus();
+			this.parts.panel.contactInfo.hide();
 		},
 
 		/**
