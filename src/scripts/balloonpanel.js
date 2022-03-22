@@ -228,7 +228,7 @@ const addBalloonPanel = () => {
 				triangleInner: CKEDITOR.dom.element.createFromHtml( this.templates.triangleInner.output() ),
 
 				contactInfo: CKEDITOR.dom.element.createFromHtml( 
-					`<div style='margin-left: 10px; margin-bottom: 8px; 
+					`<div id="libretext_contact_info" style='margin-left: 10px; margin-bottom: 8px; 
 								 padding-left: 6px; 
 								 padding-right: 6px;
 								 color: #6e6e6e;' >
@@ -243,7 +243,7 @@ const addBalloonPanel = () => {
 			this.parts.panel.append( this.parts.close, 1 );
 			this.parts.panel.append( this.parts.triangleOuter );
 			this.parts.panel.append( this.parts.content );
-			this.parts.panel.append ( this.parts.contactInfo )
+			this.parts.panel.append( this.parts.contactInfo );
 			this.parts.triangleOuter.append( this.parts.triangleInner );
 
 
@@ -286,6 +286,18 @@ const addBalloonPanel = () => {
 				return;
 			}
 
+			console.log("showing")
+			var contactInfo = CKEDITOR.document.getById( 'libretext_contact_info' );
+			var contactInfoParent = contactInfo.getParent();
+			var parentElement = contactInfoParent.getStyle("width");
+			var parentWidth = parseInt(parentElement.substring(0, parentElement.length - 2))
+
+			if (parentWidth <= 250) {
+				contactInfo.setStyle('display', 'none');
+			} else {
+				contactInfo.setStyle('display', 'block');
+			}
+
 			this.rect.visible = true;
 			this.parts.panel.show();
 
@@ -315,7 +327,6 @@ const addBalloonPanel = () => {
 		 */
 		blur: function() {
 			this.editor.focus();
-			this.parts.panel.contactInfo.hide();
 		},
 
 		/**
