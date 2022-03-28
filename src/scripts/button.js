@@ -1,6 +1,5 @@
 import "../styles/index.scss";
 const loadPlugin = () => {
-    console.log("Adding a11y button..");
     CKEDITOR.plugins.add('a11yButton', {
     init(editor) {
         editor.ui.addButton('a11yButton', {
