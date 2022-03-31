@@ -57,8 +57,31 @@ function addCustomIssues() {
         }, a11ychecker.Engine.prototype ) );
       });  
 
+      // Testing buttons without alts
+      CKEDITOR.tools.array.forEach( contentElement.find( 'button:not([alt]), button[alt=""]').toArray(), function( orig ) {
+        issues.addItem( new Issue( {
+          originalElement: orig,
+          testability: Issue.testability.ERROR,
+          id: 'testing',
+          details: {
+            title: 'Tetsing buttons without alt text',
+            descr: 'Buttons should have alt text.'
+          }
+      }, a11ychecker.Engine.prototype ) );
+    });  
 
-
+      // Testing gifs without alt images
+      CKEDITOR.tools.array.forEach( contentElement.find( 'img[src$=".gif"]:not([alt])').toArray(), function( orig ) {
+        issues.addItem( new Issue( {
+          originalElement: orig,
+          testability: Issue.testability.ERROR,
+          id: 'testing',
+          details: {
+            title: 'Gifs without alt text',
+            descr: 'Gifs should have alt text.'
+          }
+      }, a11ychecker.Engine.prototype ) );
+    });  
 
       // *************************************************
       // Map all quick fixes here

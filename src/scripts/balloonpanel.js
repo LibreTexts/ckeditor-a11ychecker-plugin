@@ -286,7 +286,6 @@ const addBalloonPanel = () => {
 				return;
 			}
 
-			console.log("showing")
 			var contactInfo = CKEDITOR.document.getById( 'libretext_contact_info' );
 			var contactInfoParent = contactInfo.getParent();
 			var parentElement = contactInfoParent.getStyle("width");
