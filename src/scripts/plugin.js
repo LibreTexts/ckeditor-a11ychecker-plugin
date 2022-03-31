@@ -49,7 +49,7 @@ function addCustomIssues() {
           issues.addItem( new Issue( {
             originalElement: orig,
             testability: Issue.testability.ERROR,
-            id: 'reserveH5andH6',
+            id: 'ReservedHeaders',
             details: {
               title: 'H5 and H6 is reserved for LibreTexts',
               descr: 'LibreTexts reserves heading level 5 and heading level 6, and should not be used outside of boxes for sidebar content. Clicking quick fix will change this heading to a header level 4.'
@@ -57,24 +57,13 @@ function addCustomIssues() {
         }, a11ychecker.Engine.prototype ) );
       });  
 
-      CKEDITOR.tools.array.forEach( contentElement.find( 'a[href*=google]').toArray(), function( orig ) {
-        issues.addItem( new Issue( {
-          originalElement: orig,
-          testability: Issue.testability.ERROR,
-          id: 'testing',
-          details: {
-            title: 'No google.com!',
-            descr: 'Testing'
-          }
-      }, a11ychecker.Engine.prototype ) );
-     });  
 
 
 
       // *************************************************
-      // Map all custom tests with custom quick fixes here
+      // Map all quick fixes here
       // *************************************************
-      a11ychecker.Engine.prototype.fixesMapping.avoidStrongs = ['StrongReplace'];
+      a11ychecker.Engine.prototype.fixesMapping.ReservedHeaders = ['ReservedHeaders'];
     });
   })
 }
