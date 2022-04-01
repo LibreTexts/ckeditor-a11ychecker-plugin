@@ -83,10 +83,55 @@ function addCustomIssues() {
       }, a11ychecker.Engine.prototype ) );
     });  
 
+      // Testing divs into landscapes -- quick fix has been written
+      CKEDITOR.tools.array.forEach( contentElement.find( 'div').toArray(), function( orig ) {
+        issues.addItem( new Issue( {
+          originalElement: orig,
+          testability: Issue.testability.NOTICE,
+          id: 'DivsShouldBeSections',
+          details: {
+            title: 'Div elements should be sections',
+            descr: 'All divs in LibreTexts should be section landmarks instead.'
+          }
+      }, a11ychecker.Engine.prototype ) );
+    });  
+
+        // Testing font size 8 -- quick fix has been written
+        // NOTE: this only works with MindTouch settings
+        CKEDITOR.tools.array.forEach( contentElement.find( '.mt-font-size-8').toArray(), function( orig ) {
+          issues.addItem( new Issue( {
+            originalElement: orig,
+            testability: Issue.testability.NOTICE,
+            id: 'FontSizeIsTooSmall',
+            details: {
+              title: 'Font size is too small',
+              descr: 'All text elements should be at least 10pt font size.'
+            }
+        }, a11ychecker.Engine.prototype ) );
+      });  
+
+      // Testing second scan of alt tags
+        CKEDITOR.tools.array.forEach( contentElement.find( 'img[alt]:not(img[alt].alt-tag-verified), img[alt=" "]:not(img[alt=" "].alt-tag-verified').toArray(), function( orig ) {
+          issues.addItem( new Issue( {
+            originalElement: orig,
+            testability: Issue.testability.NOTICE,
+            id: 'VerifyAltTag',
+            details: {
+              title: 'Verify the alt tag',
+              descr: 'Verify that the alt tag correctly describes the image. If the alt tag is blank, verify that it is decorative or that it has a caption describing the image.'
+            }
+        }, a11ychecker.Engine.prototype ) );
+      });  
+
+
+
       // *************************************************
       // Map all quick fixes here
       // *************************************************
       a11ychecker.Engine.prototype.fixesMapping.ReservedHeaders = ['ReservedHeaders'];
+      a11ychecker.Engine.prototype.fixesMapping.DivsShouldBeSections = ['DivToSection'];
+      a11ychecker.Engine.prototype.fixesMapping.FontSizeIsTooSmall = ['FontSizeFix'];
+      a11ychecker.Engine.prototype.fixesMapping.VerifyAltTag = ['ImgAltVerify'];
     });
   })
 }
