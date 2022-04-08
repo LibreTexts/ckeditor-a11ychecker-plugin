@@ -41,6 +41,7 @@ function addCss() {
   Example:    a11ychecker.Engine.prototype.fixesMapping.ReservedHeaders = ['ReservedHeaders'];
 */
 function loadFixesForExistingIssues() {
+  a11ychecker.Engine.prototype.fixesMapping.aLinksDontOpenNewWindow = ['NewWindowLink'];
     return;
 }
 

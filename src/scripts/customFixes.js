@@ -71,7 +71,7 @@ const loadCustomFixes = () => {
                     }, a11ychecker.Engine.prototype ) );
                 });  
 
-                if (data.quickFixName) {
+                if (data.quickfixName) {
                     a11ychecker.Engine.prototype.fixesMapping[data.id] = [data.quickfixName];
                 }
             }
