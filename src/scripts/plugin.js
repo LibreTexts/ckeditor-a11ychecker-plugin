@@ -12,7 +12,6 @@ const registerPlugin = () => {
   loadPlugin();
   addCss();
   loadCustomFixes();
-  loadFixesForExistingIssues();
 
   
   if (CKEDITOR.config.extraPlugins === '') {
@@ -40,9 +39,9 @@ function addCss() {
   Format:     a11ychecker.Engine.prototype.fixesMapping.ISSUE_NAME = ['QUICK_FIX_NAME'];
   Example:    a11ychecker.Engine.prototype.fixesMapping.ReservedHeaders = ['ReservedHeaders'];
 */
-function loadFixesForExistingIssues() {
-  a11ychecker.Engine.prototype.fixesMapping.aLinksDontOpenNewWindow = ['NewWindowLink'];
-    return;
-}
+// function loadFixesForExistingIssues() {
+//   a11ychecker.Engine.prototype.fixesMapping.aLinksDontOpenNewWindow = ['NewWindowLink'];
+//     return;
+// }
 
 export default registerPlugin;
