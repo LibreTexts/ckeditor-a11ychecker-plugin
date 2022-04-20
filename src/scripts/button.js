@@ -6,7 +6,7 @@ const loadPlugin = () => {
           label: 'Accessibility Checker',
           command: 'a11ychecker',
           toolbar: 'insert',
-          icon: 'https://test.libretexts.org/a11y/ckeditor-a11ychecker/dist/icons/a11ychecker.png'
+          icon: 'https://test.libretexts.org/alvin/ckeditor-a11ychecker/dist/icons/a11ychecker.png'
         });
       },
     });
