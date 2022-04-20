@@ -66,7 +66,7 @@ const loadCustomFixes = () => {
         a11ychecker.Engine.prototype.on( 'process', function( evt ) {
             var Issue = a11ychecker.Issue,
                 contentElement = evt.data.contentElement,
-                issues = evt.data.issues
+                issues = evt.data.issues;
 
             function createNewIssue( data ) {
                 var testability = Issue.testability.ERROR;
