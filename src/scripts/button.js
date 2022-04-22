@@ -44,6 +44,8 @@ const loadPlugin = () => {
             },
           ],
           onOk() {
+            // We need to filter out the issues here somehow...
+             console.log(CKEDITOR.plugins.a11ychecker.IssueList.prototype.list);
              editor.execCommand('a11ychecker')
           }
         };

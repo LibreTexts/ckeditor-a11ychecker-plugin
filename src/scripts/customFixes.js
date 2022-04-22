@@ -1,4 +1,5 @@
 const loadCustomFixes = () => {
+    var issueList;
     /*************************
     Add all custom tests here as an object to the end of customIssues array.
     If there is no quick fix name available, just leave quickfixName blank.
@@ -64,9 +65,12 @@ const loadCustomFixes = () => {
         var a11ychecker = CKEDITOR.plugins.a11ychecker;
     
         a11ychecker.Engine.prototype.on( 'process', function( evt ) {
+            console.log("evt: ", evt);
             var Issue = a11ychecker.Issue,
                 contentElement = evt.data.contentElement,
-                issues = evt.data.issues
+                issues = evt.data.issues;
+            
+            issueList = issues;
 
             function createNewIssue( data ) {
                 var testability = Issue.testability.ERROR;
@@ -93,11 +97,75 @@ const loadCustomFixes = () => {
                 }
             }
 
+            // filter issues here
+
             customIssues.forEach(function(data) {
                 createNewIssue( data );
             });
         });
     })
+
+    CKEDITOR.plugins.add('a11yButton', {
+    init(editor) {
+
+        CKEDITOR.dialog.add('a11yTestDialog', (editor) => {
+        return {
+            title: 'Accessibility Checker (Menu is WIP)',
+            resizable: CKEDITOR.DIALOG_RESIZE_BOTH,
+            minWidth: 500,
+            minHeight: 400,
+            contents: [
+            {
+                id: 'tab1',
+                label: 'First Tab',
+                title: 'First Tab Title',
+                accessKey: 'Q',
+                elements: [
+                {
+                    type: 'checkbox',
+                    label: 'Test for all accessibility issues',
+                    id: 'pickAllTests',
+                    labelStyle: 'margin-left: 30px'
+                },
+                {
+                    type: 'checkbox',
+                    label: 'Headings',
+                    id: 'pickHeadings',
+                    labelStyle: 'margin-left: 30px'
+                },
+                {
+                    type: 'checkbox',
+                    label: 'Alt Image Tags',
+                    id: 'pickAltTags',
+                    labelStyle: 'margin-left: 30px'
+                },
+                {
+                    type: 'checkbox',
+                    label: 'Tables',
+                    id: 'pickCheckbox',
+                    labelStyle: 'margin-left: 30px'
+                }
+                ],
+            },
+            ],
+            onOk() {
+            // We need to filter out the issues here somehow...
+                console.log("issueList: ", issueList);
+                editor.execCommand('a11ychecker')
+            }
+        };
+        });
+
+        editor.addCommand('testDialog', new CKEDITOR.dialogCommand('a11yTestDialog'));
+
+        editor.ui.addButton('a11yButton', {
+            label: 'Accessibility Checker',
+            command: 'testDialog',
+            toolbar: 'insert',
+            icon: 'https://test.libretexts.org/alvin/public/ckeditor-a11ychecker/dist/icons/a11ychecker.png'
+        });
+        },
+    });
 };
   
 export default loadCustomFixes;
