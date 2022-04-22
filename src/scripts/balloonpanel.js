@@ -20,7 +20,7 @@ const addBalloonPanel = () => {
 	CKEDITOR.plugins.add( 'balloonpanel', {
 		init: function() {
 			if ( !stylesLoaded ) {
-				CKEDITOR.document.appendStyleSheet('https://test.libretexts.org/alvin/ckeditor-a11ychecker/dist/balloonpanel/skins/moono-lisa/balloonpanel.css' );
+				CKEDITOR.document.appendStyleSheet('https://test.libretexts.org/alvin/public/ckeditor-a11ychecker/dist/balloonpanel/skins/moono-lisa/balloonpanel.css' );
 				stylesLoaded = true;
 			}
 		}
