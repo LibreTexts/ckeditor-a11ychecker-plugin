@@ -1,7 +1,6 @@
 import "../styles/index.scss";
 import loadCustomFixes from "./customFixes";
 
-var arr = []
 const loadPlugin = () => {
 
     CKEDITOR.plugins.add('a11yButton', {
@@ -49,8 +48,6 @@ const loadPlugin = () => {
           ],
           onOk() {
             // We need to filter out the issues here somehow...
-            arr = ["hello", "this is an array 12345s"];
-            loadCustomFixes(arr);
             editor.execCommand('a11ychecker')
           }
         };

@@ -1,6 +1,5 @@
-const loadCustomFixes = issuesList => {
-    console.log("loading custom fixes...");
-    console.log("issues list...", issuesList);
+const loadCustomFixes = () => {
+
     /*************************
     Add all custom tests here as an object to the end of customIssues array.
     If there is no quick fix name available, just leave quickfixName blank.
@@ -60,48 +59,47 @@ const loadCustomFixes = issuesList => {
         
     ]
 
+    CKEDITOR.on("instanceReady", function() {
+        // Creating custom issues and registering them in a11ychecker.
+        var a11ychecker = CKEDITOR.plugins.a11ychecker;
 
-    // Creating custom issues and registering them in a11ychecker.
-    var a11ychecker = CKEDITOR.plugins.a11ychecker;
+        a11ychecker.Engine.prototype.on( 'process', function( evt ) {
+            var Issue = a11ychecker.Issue,
+                contentElement = evt.data.contentElement,
+                issues = evt.data.issues;
 
-    a11ychecker.Engine.prototype.on( 'process', function( evt ) {
-        var Issue = a11ychecker.Issue,
-            contentElement = evt.data.contentElement,
-            issues = evt.data.issues;
+            function createNewIssue( data ) {
+                var testability = Issue.testability.ERROR;
+                if (data.testability == 'Notice') {
+                    testability = Issue.testability.NOTICE;
+                } else if (data.testability == 'Warning') {
+                    testability = Issue.testability.WARNING;
+                }
 
-        function createNewIssue( data ) {
-            var testability = Issue.testability.ERROR;
-            if (data.testability == 'Notice') {
-                testability = Issue.testability.NOTICE;
-            } else if (data.testability == 'Warning') {
-                testability = Issue.testability.WARNING;
+                CKEDITOR.tools.array.forEach( contentElement.find( data.selector ).toArray(), function( orig ) {
+                    console.log("adding issue ", data.id);
+                    issues.addItem( new Issue( {
+                        originalElement: orig,
+                        testability: testability,
+                        id: data.id,
+                        details: {
+                            title: data.title,
+                            descr: data.desc
+                        }
+                    }, a11ychecker.Engine.prototype ) );
+                });  
+
+                if (data.quickfixName) {
+                    a11ychecker.Engine.prototype.fixesMapping[data.id] = [data.quickfixName];
+                }
             }
+            
+            customIssues.forEach(function(data) {
+                createNewIssue( data );
+            });
 
-            CKEDITOR.tools.array.forEach( contentElement.find( data.selector ).toArray(), function( orig ) {
-                console.log("adding issue ", data.id);
-                issues.addItem( new Issue( {
-                    originalElement: orig,
-                    testability: testability,
-                    id: data.id,
-                    details: {
-                        title: data.title,
-                        descr: data.desc
-                    }
-                }, a11ychecker.Engine.prototype ) );
-            });  
-
-            if (data.quickfixName) {
-                a11ychecker.Engine.prototype.fixesMapping[data.id] = [data.quickfixName];
-            }
-        }
-
-        customIssues.forEach(function(data) {
-            createNewIssue( data );
         });
-
-        issues.filter(issue => issue.id != "ImgHasAltNew")
-        console.log(issues);
-    });
+    })
 };
   
 export default loadCustomFixes;

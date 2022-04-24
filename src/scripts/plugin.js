@@ -2,6 +2,8 @@ import addA11yChecker from "./a11ychecker";
 import addBalloonPanel from "./balloonpanel";
 import "../styles/contents.css";
 import loadPlugin from "./loadPlugin";
+import loadCustomFixes from "./customFixes";
+
 
 console.log('CKEditor A11y Plugin Development Version');
 
@@ -9,6 +11,7 @@ const registerPlugin = () => {
   addBalloonPanel();
   addA11yChecker();
   loadPlugin();
+  loadCustomFixes();
   addCss();
 
   if (CKEDITOR.config.extraPlugins === '') {
