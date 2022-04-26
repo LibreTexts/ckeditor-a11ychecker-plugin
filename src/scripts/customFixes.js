@@ -7,14 +7,14 @@ const loadCustomFixes = () => {
     // ALVIN NOTE: Only ReservedHeaders is in production
     // If there is no quick fix name available, just leave quickfixName blank
     const customIssues = [
-        // {
-        //     selector: 'img[alt]:not(img[alt].alt-tag-verified), img[alt=" "]:not(img[alt=" "].alt-tag-verified',
-        //     testability: 'Notice',
-        //     id: 'VerifyAltTag',
-        //     title: 'Verify the alt tag',
-        //     desc: 'Verify that the alt tag correctly describes the image. If the alt tag is blank, verify that it is decorative or that it has a caption describing the image.',
-        //     quickfixName: 'ImgAltVerify'
-        // },
+        {
+            selector: 'img[alt]:not(img[alt].alt-tag-verified), img[alt=" "]:not(img[alt=" "].alt-tag-verified',
+            testability: 'Notice',
+            id: 'VerifyAltTag',
+            title: 'Verify the alt tag',
+            desc: 'Verify that the alt tag correctly describes the image. If the alt tag is blank, verify that it is decorative or that it has a caption describing the image.',
+            quickfixName: 'ImgAltVerify'
+        },
         {
             selector: 'h5:not(section h5, div h5),h6:not(section h6, div h6)',
             testability: 'Error',
@@ -31,14 +31,14 @@ const loadCustomFixes = () => {
         //     desc: 'All divs in LibreTexts should be section landmarks instead.',
         //     quickfixName: 'DivToSection'
         // },
-        // {
-        //     selector: '.mt-font-size-8',
-        //     testability: 'Notice',
-        //     id: 'FontSizeIsTooSmall',
-        //     title: 'Font size is too small',
-        //     desc: 'All text elements should be at least 10pt font size.',
-        //     quickfixName: 'FontSizeFix'
-        // },
+        {
+            selector: '.mt-font-size-8',
+            testability: 'Notice',
+            id: 'FontSizeIsTooSmall',
+            title: 'Font size is too small',
+            desc: 'All text elements should be at least 10pt font size.',
+            quickfixName: 'FontSizeFix'
+        },
         // {
         //     selector: 'th p',
         //     testability: 'Error',
