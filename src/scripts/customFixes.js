@@ -1,3 +1,5 @@
+import filteredIssues from "./filteredIIssues";
+
 const loadCustomFixes = () => {
 
     /*************************
@@ -60,13 +62,17 @@ const loadCustomFixes = () => {
     ]
 
     CKEDITOR.on("instanceReady", function() {
+        console.log("ckeditor instance ready")
         // Creating custom issues and registering them in a11ychecker.
         var a11ychecker = CKEDITOR.plugins.a11ychecker;
 
         a11ychecker.Engine.prototype.on( 'process', function( evt ) {
+            console.log("event: ", evt);
             var Issue = a11ychecker.Issue,
                 contentElement = evt.data.contentElement,
                 issues = evt.data.issues;
+
+            console.log("evt.data.issues.list: ", evt.data.issues.list);
 
             function createNewIssue( data ) {
                 var testability = Issue.testability.ERROR;
@@ -97,7 +103,12 @@ const loadCustomFixes = () => {
             customIssues.forEach(function(data) {
                 createNewIssue( data );
             });
-
+            console.log(issues);
+            
+            // if (filteredIssues.includes("images")) {
+            //     console.log("Filtering images issues..");
+            //     issues = issues.filter((element) => element.id == "tableWithBothHeadersUseScope")
+            // }
         });
     })
 };
