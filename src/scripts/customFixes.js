@@ -1,3 +1,5 @@
+import { filteredIssues } from "./loadPlugin";
+
 const loadCustomFixes = () => {
 
     /*************************
@@ -65,7 +67,7 @@ const loadCustomFixes = () => {
         var a11ychecker = CKEDITOR.plugins.a11ychecker;
 
         a11ychecker.Engine.prototype.on( 'process', function( evt ) {
-            console.log("event: ", evt);
+            console.log("Process event: ", evt);
             var Issue = a11ychecker.Issue,
                 contentElement = evt.data.contentElement,
                 issues = evt.data.issues;
@@ -79,7 +81,6 @@ const loadCustomFixes = () => {
                 }
 
                 CKEDITOR.tools.array.forEach( contentElement.find( data.selector ).toArray(), function( orig ) {
-                    console.log("adding issue ", data.id);
                     issues.addItem( new Issue( {
                         originalElement: orig,
                         testability: testability,
@@ -100,12 +101,13 @@ const loadCustomFixes = () => {
                 createNewIssue( data );
             });
 
-            console.log(evt.data.issues.list)
-            
-            // if (filteredIssues.includes("images")) {
-            //     console.log("Filtering images issues..");
-            //     issues = issues.filter((element) => element.id == "tableWithBothHeadersUseScope")
-            // }
+            // This is how you filter!!!!!!!!!
+            let guideline = evt.sender.config.guideline;
+            console.log(issues);
+            // This will work and not crash the plugin as long evt.sender.config.guideline is not empty
+            // TODO: put in a dummy test that will always be there to ensure that
+            evt.sender.config.guideline = guideline.filter(element => element == "radioHasLabel");
+            issues = issues.filter(element => element.id == "ImgHasAltNew");
         });
     })
 };

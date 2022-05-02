@@ -1,5 +1,6 @@
 import "../styles/index.scss";
 
+var filteredIssues = "";
 const loadPlugin = () => {
 
     CKEDITOR.plugins.add('a11yButton', {
@@ -47,6 +48,7 @@ const loadPlugin = () => {
           ],
           onOk() {
             // We need to filter out the issues here somehow...
+            filteredIssues = "images";
             editor.execCommand('a11ychecker')
           }
         };
@@ -64,4 +66,5 @@ const loadPlugin = () => {
     });
 };
   
-  export default loadPlugin;
+export var filteredIssues;
+export default loadPlugin;
