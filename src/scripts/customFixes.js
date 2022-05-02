@@ -72,8 +72,6 @@ const loadCustomFixes = () => {
                 contentElement = evt.data.contentElement,
                 issues = evt.data.issues;
 
-            console.log("evt.data.issues.list: ", evt.data.issues.list);
-
             function createNewIssue( data ) {
                 var testability = Issue.testability.ERROR;
                 if (data.testability == 'Notice') {
@@ -103,7 +101,8 @@ const loadCustomFixes = () => {
             customIssues.forEach(function(data) {
                 createNewIssue( data );
             });
-            console.log(issues);
+
+            a11ychecker.Engine.prototype.fixesMapping["tableWithBothHeadersUseScope"] = ["TableScope"];
             
             // if (filteredIssues.includes("images")) {
             //     console.log("Filtering images issues..");

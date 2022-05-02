@@ -1,5 +1,5 @@
 import "../styles/index.scss";
-import filteredIssues from "./filteredIIssues";
+
 
 const loadPlugin = () => {
 
@@ -48,7 +48,6 @@ const loadPlugin = () => {
           ],
           onOk() {
             // We need to filter out the issues here somehow...
-            filteredIssues.push("images")
             editor.execCommand('a11ychecker')
           }
         };
