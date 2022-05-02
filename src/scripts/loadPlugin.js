@@ -1,6 +1,5 @@
 import "../styles/index.scss";
 
-
 const loadPlugin = () => {
 
     CKEDITOR.plugins.add('a11yButton', {
@@ -8,7 +7,7 @@ const loadPlugin = () => {
 
       CKEDITOR.dialog.add('a11yTestDialog', (editor) => {
         return {
-          title: 'Accessibility Checker (Menu is WIP)',
+          title: 'Accessibility Checker',
           resizable: CKEDITOR.DIALOG_RESIZE_BOTH,
           minWidth: 500,
           minHeight: 400,

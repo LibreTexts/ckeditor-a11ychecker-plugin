@@ -1,8 +1,9 @@
 import issueList from "./issueList";
 
 const addA11yChecker = () => {
+    console.log("adding a11ychecker..");
 /**
-* @license Copyright (c) 2014-2021, CKSource - Frederico Knabben. All rights reserved.
+* @license Copyright (c) 2014-2022, CKSource - Frederico Knabben. All rights reserved.
 * For licensing, see LICENSE.md or https://ckeditor.com/license
 */
 

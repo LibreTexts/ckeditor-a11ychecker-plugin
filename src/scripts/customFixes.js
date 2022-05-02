@@ -1,5 +1,3 @@
-import filteredIssues from "./filteredIIssues";
-
 const loadCustomFixes = () => {
 
     /*************************
@@ -102,7 +100,7 @@ const loadCustomFixes = () => {
                 createNewIssue( data );
             });
 
-            a11ychecker.Engine.prototype.fixesMapping["tableWithBothHeadersUseScope"] = ["TableScope"];
+            console.log(evt.data.issues.list)
             
             // if (filteredIssues.includes("images")) {
             //     console.log("Filtering images issues..");
