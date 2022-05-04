@@ -17,8 +17,5 @@ LibreEditor.editorConfig = function ( config ) {
 LibreEditor.a11yPlugin = (config) => {
   registerPlugin();
   config.toolbar[12].push('a11yButton');
-
-  console.log("config: ", config);
-  console.log("params: ",config.a11ychecker_quailParams);
 };
 
