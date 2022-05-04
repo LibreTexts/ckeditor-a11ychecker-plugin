@@ -28,6 +28,9 @@ module.exports = {
     alias: {
       '~': Path.resolve(__dirname, '../src'),
     },
+    fallback: {
+      "path": require.resolve("path-browserify") 
+    }
   },
   module: {
     rules: [

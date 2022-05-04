@@ -3,7 +3,6 @@ var issueList = [
     "aLinksDontOpenNewWindow", 
     "aAdjacentWithSameResourceShouldBeCombined",
     "aImgAltNotRepetitive",
-    "aLinksAreSeparatedByPrintableCharacters",
     "aMustNotHaveJavascriptHref",
     "blockquoteNotUsedForIndentation",
     "documentVisualListsAreMarkedUp",
@@ -109,6 +108,14 @@ var customIssues = [
             title: 'Images must provide alternative text',
         desc: 'Alternative text needs to convey the same information as the image. This text will be used when the browser has disabled images, the image was not found on the server, or by non-sighted visitors who use screen readers.',
         quickfixName: 'ImgAlt'
+    },
+    {
+        selector: 'h1.dummyClass',
+        testability: 'Error',
+        id: 'DummyID',
+        title: 'This is a dummy custom test.',
+        desc: 'If you are reading this, this is a dummy class that is kept for development purposes. Please rename the class of this element.',
+        quickfixName: ''
     }
     // {
     //     selector: 'div',
@@ -128,6 +135,13 @@ var customIssues = [
     // },
 ]
 
+// TODO: probably make into one big object to export
+var headingTests = ["pNotUsedAsHeader", "headerH1","headerH2","headerH3","headerH4","headerH5","headerH6"];
+var imageTests = ["imgAltTextNotRedundant","imgShouldNotHaveTitle","imgAltIsDifferent","imgAltIsTooLong","imgWithEmptyAlt"];
+var tableTests = ["tableWithBothHeadersUseScope","tableComplexHasSummary","tableSummaryDoesNotDuplicateCaption"];
+var linkTests = ["aLinksDontOpenNewWindow", "aAdjacentWithSameResourceShouldBeCombined","aImgAltNotRepetitive", "aSuspiciousLinkText", "aMustContainText"];
+var customHeadingTests = ["ReservedHeaders"];
+var customImageTests = ["ImgHasAltNew","VerifyAltTag"];
 
 
-export var issueList, issueMapping, customIssues;
+export var issueList, issueMapping, customIssues, headingTests, imageTests, tableTests, linkTests, customHeadingTests, customImageTests;
