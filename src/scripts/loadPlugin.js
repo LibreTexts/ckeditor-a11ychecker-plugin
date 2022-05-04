@@ -5,7 +5,7 @@ const loadPlugin = () => {
 
     CKEDITOR.plugins.add('a11yButton', {
     init(editor) {
-
+      // TODO: validation
       CKEDITOR.dialog.add('a11yTestDialog', (editor) => {
         return {
           title: 'Accessibility Checker',
@@ -14,41 +14,48 @@ const loadPlugin = () => {
           minHeight: 400,
           contents: [
             {
-              id: 'tab1',
-              label: 'First Tab',
-              title: 'First Tab Title',
+              id: 'a11yTOC',
+              label: 'A11y Table Of Contents',
+              title: 'A11y Table Of Contents',
               accessKey: 'Q',
               elements: [
                 {
                   type: 'checkbox',
                   label: 'Test for all accessibility issues',
-                  id: 'pickAllTests',
+                  id: 'testAll',
                   labelStyle: 'margin-left: 30px'
                 },
                 {
                   type: 'checkbox',
                   label: 'Headings',
-                  id: 'pickHeadings',
+                  id: 'testHeadings',
                   labelStyle: 'margin-left: 30px'
                 },
                 {
                   type: 'checkbox',
                   label: 'Alt Image Tags',
-                  id: 'pickAltTags',
+                  id: 'testImages',
                   labelStyle: 'margin-left: 30px'
                 },
                 {
                   type: 'checkbox',
                   label: 'Tables',
-                  id: 'pickCheckbox',
+                  id: 'testTables',
                   labelStyle: 'margin-left: 30px'
                 }
               ],
             },
           ],
           onOk() {
-            // We need to filter out the issues here somehow...
-            filteredIssues = "images";
+            const menu = this;
+
+            filteredIssues = {
+              "All": menu.getValueOf('a11yTOC', 'testAll'),
+              "Headings": menu.getValueOf('a11yTOC', 'testHeadings'),
+              "Images": menu.getValueOf('a11yTOC', 'testImages'),
+              "Tables": menu.getValueOf('a11yTOC', 'testTables')
+            };
+
             editor.execCommand('a11ychecker')
           }
         };

@@ -1,69 +1,8 @@
+import { customIssues, issueList, headingTests, imageTests, tableTests, customHeadingTests, customImageTests } from "./issueList";
 import { filteredIssues } from "./loadPlugin";
 
 const loadCustomFixes = () => {
-
-    /*************************
-    Add all custom tests here as an object to the end of customIssues array.
-    If there is no quick fix name available, just leave quickfixName blank.
-    *************************/
-
-    // ALVIN NOTE: Only ReservedHeaders is in production
-    // If there is no quick fix name available, just leave quickfixName blank
-    const customIssues = [
-        // {
-        //     selector: 'img[alt]:not(img[alt].alt-tag-verified), img[alt=" "]:not(img[alt=" "].alt-tag-verified',
-        //     testability: 'Notice',
-        //     id: 'VerifyAltTag',
-        //     title: 'Verify the alt tag',
-        //     desc: 'Verify that the alt tag correctly describes the image. If the alt tag is blank, verify that it is decorative or that it has a caption describing the image.',
-        //     quickfixName: 'ImgAltVerify'
-        // },
-        {
-            selector: 'h5:not(section h5, div h5),h6:not(section h6, div h6)',
-            testability: 'Error',
-            id: 'ReservedHeaders',
-            title: 'H5 and H6 is reserved for LibreTexts',
-            desc: 'LibreTexts reserves heading level 5 and heading level 6, and should not be used outside of boxes for sidebar content. Clicking quick fix will change this heading to a header level 4.',
-            quickfixName: 'ReservedHeaders'
-        },
-        // {
-        //     selector: 'div',
-        //     testability: 'Notice',
-        //     id: 'DivsShouldBeSections',
-        //     title: 'Div elements should be sections',
-        //     desc: 'All divs in LibreTexts should be section landmarks instead.',
-        //     quickfixName: 'DivToSection'
-        // },
-        // {
-        //     selector: '.mt-font-size-8',
-        //     testability: 'Notice',
-        //     id: 'FontSizeIsTooSmall',
-        //     title: 'Font size is too small',
-        //     desc: 'All text elements should be at least 10pt font size.',
-        //     quickfixName: 'FontSizeFix'
-        // },
-        // {
-        //     selector: 'th p',
-        //     testability: 'Error',
-        //     id: 'TableHeaderShouldNotHavePTag',
-        //      title: 'Paragraph elements should not be inside table headers',
-        //     desc: 'Using paragraph tags inside table header elements will disrupt the flow of the table.',
-        //     quickfixName: 'PTagInTableHeaderFix'
-        // },
-        {
-            selector: 'img:not([alt]):not([media])',
-            testability: 'Error',
-            id: 'ImgHasAltNew',
-             title: 'Images must provide alternative text',
-            desc: 'Alternative text needs to convey the same information as the image. This text will be used when the browser has disabled images, the image was not found on the server, or by non-sighted visitors who use screen readers.',
-            quickfixName: 'ImgAlt'
-        }
-        
-    ]
-
     CKEDITOR.on("instanceReady", function() {
-        console.log("ckeditor instance ready")
-        // Creating custom issues and registering them in a11ychecker.
         var a11ychecker = CKEDITOR.plugins.a11ychecker;
 
         a11ychecker.Engine.prototype.on( 'process', function( evt ) {
@@ -96,18 +35,58 @@ const loadCustomFixes = () => {
                     a11ychecker.Engine.prototype.fixesMapping[data.id] = [data.quickfixName];
                 }
             }
-            
-            customIssues.forEach(function(data) {
-                createNewIssue( data );
-            });
 
             // This is how you filter!!!!!!!!!
-            let guideline = evt.sender.config.guideline;
-            console.log(issues);
-            // This will work and not crash the plugin as long evt.sender.config.guideline is not empty
-            // TODO: put in a dummy test that will always be there to ensure that
-            evt.sender.config.guideline = guideline.filter(element => element == "radioHasLabel");
-            issues = issues.filter(element => element.id == "ImgHasAltNew");
+            // !! IMPORTANT: GUIDELINE CAN NOT EVER BE AN EMPTY LIST
+            function filterIssues() {
+                let newGuidelines = [];
+                let testAll = filteredIssues["All"],
+                    testHeadings = filteredIssues["Headings"],
+                    testImages = filteredIssues["Images"],
+                    testTables = filteredIssues["Tables"];
+                let allFalse = (testAll == false && testHeadings == false && testImages == false && testTables == false);
+                    
+
+                // If the user selected all, we don't need to filter issues.
+                if (testAll || allFalse) {
+                    evt.sender.config.guideline = issueList;
+                    return;
+                } 
+                
+                if (testHeadings) { newGuidelines.push(...headingTests);   }
+                if (testImages)   { newGuidelines.push(...imageTests);     }
+                if (testTables)   { newGuidelines.push(...tableTests);     }
+
+                // testing purposes
+                // let testing = ["ImgHasAltNew"];
+                // issues.each((element) => {
+                //     console.log(element.id, " is ", testing.includes(element.id));
+                // })
+
+                // TOOD: Refactor this.
+                if (testHeadings && testImages) { 
+                    issues = issues.filter(element => element.id == "ImgHasAltNew" || element.id == "VerifyAltTag" || element.id == "ReservedHeaders");
+                } else if (testImages) { 
+                    issues = issues.filter(element => element.id == "ImgHasAltNew" || element.id == "VerifyAltTag");
+                } else if (testHeadings) {
+                    issues = issues.filter(element => element.id == "ReservedHeaders");
+                }
+
+                // Custom issue guidelines and the built-in guidelines can NOT be empty.
+                // This is to ensure they're never empty by having them check for dummy & barely used tests just in case
+                // they are somehow empty.
+                //issues = issues.filter(element => element.id == "ImgHasAltNew");
+                //console.log(issues, issues.list.length);
+                //newIssues == [] ? issues = issues.filter(element => element.id == "DummyID") : issues = issues.filter(element => element.id in newIssues);
+                newGuidelines == [] ? evt.sender.config.guideline = ["KINGUseLongDateFormat"] : evt.sender.config.guideline = newGuidelines;
+
+                return;
+            }
+            
+
+            // Create new custom issues and filter out issues based on checkbox
+            customIssues.forEach( (data) => { createNewIssue(data) });
+            filterIssues();
         });
     })
 };
