@@ -1,11 +1,10 @@
 import "../styles/index.scss";
 
-var filteredIssues = "";
+var filteredIssues = {};
 const loadPlugin = () => {
 
     CKEDITOR.plugins.add('a11yButton', {
     init(editor) {
-      // TODO: validation
       CKEDITOR.dialog.add('a11yTestDialog', (editor) => {
         return {
           title: 'Accessibility Checker',
@@ -42,6 +41,12 @@ const loadPlugin = () => {
                   label: 'Tables',
                   id: 'testTables',
                   labelStyle: 'margin-left: 30px'
+                },
+                {
+                  type: 'checkbox',
+                  label: 'Links',
+                  id: 'testLinks',
+                  labelStyle: 'margin-left: 30px'
                 }
               ],
             },
@@ -50,10 +55,11 @@ const loadPlugin = () => {
             const menu = this;
 
             filteredIssues = {
-              "All": menu.getValueOf('a11yTOC', 'testAll'),
-              "Headings": menu.getValueOf('a11yTOC', 'testHeadings'),
-              "Images": menu.getValueOf('a11yTOC', 'testImages'),
-              "Tables": menu.getValueOf('a11yTOC', 'testTables')
+              "All":      menu.getValueOf( 'a11yTOC',  'testAll'      ),
+              "Headings": menu.getValueOf( 'a11yTOC',  'testHeadings' ),
+              "Images":   menu.getValueOf( 'a11yTOC',  'testImages'   ),
+              "Tables":   menu.getValueOf( 'a11yTOC',  'testTables'   ),
+              "Links":    menu.getValueOf( 'a11yTOC',  'testLinks'    )
             };
 
             editor.execCommand('a11ychecker')
