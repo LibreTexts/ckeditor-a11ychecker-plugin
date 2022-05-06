@@ -232,7 +232,7 @@ const addBalloonPanel = () => {
 								 padding-left: 6px; 
 								 padding-right: 6px;
 								 color: #6e6e6e;' >
-						Contact ckelibretext@ucdavis.edu for bug reporting. 
+						Contact ckelibretext@ucdavis.edu for bug reporting. <br/>If a quick fix doesn't show up, please refresh the page.
 					</div>`)
 			};
 

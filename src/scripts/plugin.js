@@ -3,21 +3,18 @@ import "../styles/contents.css";
 import loadPlugin from "./loadPlugin";
 import loadCustomFixes from "./customFixes";
 import addA11yChecker from "./a11ychecker";
-
 const registerPlugin = () => {
-  if (!CKEDITOR.config.extraPlugins.includes('a11ychecker')) {
     addBalloonPanel();
     addA11yChecker();
     loadPlugin();
     loadCustomFixes();
     addCss();
-  
-    if (CKEDITOR.config.extraPlugins === '') {
-      CKEDITOR.config.extraPlugins += 'a11ychecker,a11yButton';
-    } else {
-      CKEDITOR.config.extraPlugins += ',a11ychecker,a11yButton';
-    }
+  if (CKEDITOR.config.extraPlugins === '') {
+    CKEDITOR.config.extraPlugins += 'a11ychecker,a11yButton';
+  } else {
+    CKEDITOR.config.extraPlugins += ',a11ychecker,a11yButton';
   }
+
 };
 
 
