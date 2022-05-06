@@ -68,7 +68,8 @@ var issueMapping = {
     tableDataShouldHaveTh:["TableHeaders"],
     tableWithBothHeadersUseScope:["TableScope"],
     tableSummaryDoesNotDuplicateCaption:["ChangeTableSummary"],
-    tableComplexHasSummary:["AddTableSummary"]
+    tableComplexHasSummary:["AddTableSummary"],
+    colorFontContrast:["ColorContrastFix"]
 }
 
 // Custom tests + fixes
