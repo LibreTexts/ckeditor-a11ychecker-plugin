@@ -32,7 +32,8 @@ var issueList = [
     "passwordHasLabel",
     "fileHasLabel",
     "fieldsetHasLabel",
-    "aMustContainText"];
+    "aMustContainText",
+    "colorFontContrast"];
 
 // Mapping pre-built issues with quick fixes
 var issueMapping = {
