@@ -33,7 +33,8 @@ var issueList = [
     "fileHasLabel",
     "fieldsetHasLabel",
     "aMustContainText",
-    "colorFontContrast"];
+    //"colorFontContrast"
+];
 
 // Mapping pre-built issues with quick fixes
 var issueMapping = {
@@ -69,7 +70,7 @@ var issueMapping = {
     tableWithBothHeadersUseScope:["TableScope"],
     tableSummaryDoesNotDuplicateCaption:["ChangeTableSummary"],
     tableComplexHasSummary:["AddTableSummary"],
-    colorFontContrast:["ColorContrastFix"]
+    //colorFontContrast:["ColorContrastFix"]
 }
 
 // Custom tests + fixes
