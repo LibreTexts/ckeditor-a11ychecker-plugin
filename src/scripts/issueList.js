@@ -33,6 +33,8 @@ var issueList = [
     "fileHasLabel",
     "fieldsetHasLabel",
     "aMustContainText",
+    "tableUsesCaption",
+    //"tableCaptionIdentifiesTable"
     //"colorFontContrast"
 ];
 
@@ -141,7 +143,7 @@ var customIssues = [
 // TODO: probably make into one big object to export
 var headingTests = ["pNotUsedAsHeader", "headerH1","headerH2","headerH3","headerH4","headerH5","headerH6"];
 var imageTests = ["imgAltTextNotRedundant","imgShouldNotHaveTitle","imgAltIsDifferent","imgAltIsTooLong","imgWithEmptyAlt"];
-var tableTests = ["tableWithBothHeadersUseScope","tableComplexHasSummary","tableSummaryDoesNotDuplicateCaption"];
+var tableTests = ["tableWithBothHeadersUseScope","tableComplexHasSummary","tableSummaryDoesNotDuplicateCaption", "tableUsesCaption"];
 var linkTests = ["aLinksDontOpenNewWindow", "aAdjacentWithSameResourceShouldBeCombined","aImgAltNotRepetitive", "aSuspiciousLinkText", "aMustContainText"];
 var customHeadingTests = ["ReservedHeaders"];
 var customImageTests = ["ImgHasAltNew","VerifyAltTag"];
