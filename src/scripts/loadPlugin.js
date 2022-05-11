@@ -19,34 +19,38 @@ const loadPlugin = () => {
               accessKey: 'Q',
               elements: [
                 {
+                  type: 'html',
+                  html: '<p>Please select which issues you would like to test for:</p>'
+                },
+                {
                   type: 'checkbox',
-                  label: 'Test for all accessibility issues',
+                  label: 'Test for all accessibility issues (DEFAULT)',
                   id: 'testAll',
-                  labelStyle: 'margin-left: 30px'
+                  labelStyle: 'margin-left: 30px;'
                 },
                 {
                   type: 'checkbox',
                   label: 'Headings',
                   id: 'testHeadings',
-                  labelStyle: 'margin-left: 30px'
+                  labelStyle: 'margin-left: 30px;'
                 },
                 {
                   type: 'checkbox',
                   label: 'Alt Image Tags',
                   id: 'testImages',
-                  labelStyle: 'margin-left: 30px'
+                  labelStyle: 'margin-left: 30px;'
                 },
                 {
                   type: 'checkbox',
                   label: 'Tables',
                   id: 'testTables',
-                  labelStyle: 'margin-left: 30px'
+                  labelStyle: 'margin-left: 30px;'
                 },
                 {
                   type: 'checkbox',
                   label: 'Links',
                   id: 'testLinks',
-                  labelStyle: 'margin-left: 30px'
+                  labelStyle: 'margin-left: 30px;'
                 }
               ],
             },
