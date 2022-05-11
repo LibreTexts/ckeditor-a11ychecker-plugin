@@ -32,9 +32,7 @@ var issueList = [
     "passwordHasLabel",
     "fileHasLabel",
     "fieldsetHasLabel",
-    "aMustContainText",
     "tableUsesCaption",
-    //"tableCaptionIdentifiesTable"
     //"colorFontContrast"
 ];
 
@@ -45,7 +43,7 @@ var issueMapping = {
     aAdjacentWithSameResourceShouldBeCombined:["AnchorsMerge"],
     imgImportantNoSpacerAlt:["ImgAlt"],
     imgWithEmptyAlt:["ImgAltNonEmpty"],
-    imgAltNotEmptyInAnchor:["ImgAlt"],
+    imgAltNotEmptyInAnchor:["ImgAltAnchor"],
     imgAltIsDifferent:["ImgAlt"],
     imgAltIsTooLong:["ImgAlt"],
     imgShouldNotHaveTitle:["AttributeRenameDefault"],
@@ -66,7 +64,6 @@ var issueMapping = {
     fieldsetHasLabel:["FieldsetLegend"],
     aSuspiciousLinkText:["SuspiciousLinkFix"],
     aMustHaveTitle:["LinkTitleFix"],
-    aMustContainText:["EmptyLink"],
     tableUsesCaption:["AddTableCaption"],
     tableDataShouldHaveTh:["TableHeaders"],
     tableWithBothHeadersUseScope:["TableScope"],
@@ -107,7 +104,7 @@ var customIssues = [
         quickfixName: 'FontSizeFix'
     },
     {
-        selector: 'img:not([alt]):not([media])',
+        selector: 'img:not([alt]):not([media], a img:not([alt]))',
         testability: 'Error',
         id: 'ImgHasAltNew',
             title: 'Images must provide alternative text',
@@ -121,15 +118,16 @@ var customIssues = [
         title: 'This is a dummy custom test.',
         desc: 'If you are reading this, this is a dummy class that is kept for development purposes. Please rename the class of this element.',
         quickfixName: ''
-    }
-    // {
-    //     selector: 'div',
-    //     testability: 'Notice',
-    //     id: 'DivsShouldBeSections',
-    //     title: 'Div elements should be sections',
-    //     desc: 'All divs in LibreTexts should be section landmarks instead.',
-    //     quickfixName: 'DivToSection'
-    // },
+    },
+    // DO NOT PUSH YET
+    {
+        selector: 'div',
+        testability: 'Notice',
+        id: 'DivsShouldBeSections',
+        title: 'Div elements should be sections',
+        desc: 'All divs in LibreTexts should be section landmarks instead.',
+        quickfixName: 'DivToSection'
+    },
     // {
     //     selector: 'th p',
     //     testability: 'Error',
@@ -144,7 +142,7 @@ var customIssues = [
 var headingTests = ["pNotUsedAsHeader", "headerH1","headerH2","headerH3","headerH4","headerH5","headerH6"];
 var imageTests = ["imgAltTextNotRedundant","imgShouldNotHaveTitle","imgAltIsDifferent","imgAltIsTooLong","imgWithEmptyAlt"];
 var tableTests = ["tableWithBothHeadersUseScope","tableComplexHasSummary","tableSummaryDoesNotDuplicateCaption", "tableUsesCaption"];
-var linkTests = ["aLinksDontOpenNewWindow", "aAdjacentWithSameResourceShouldBeCombined","aImgAltNotRepetitive", "aSuspiciousLinkText", "aMustContainText"];
+var linkTests = ["aLinksDontOpenNewWindow", "aAdjacentWithSameResourceShouldBeCombined","aImgAltNotRepetitive", "aSuspiciousLinkText", "imgAltNotEmptyInAnchor"];
 var customHeadingTests = ["ReservedHeaders"];
 var customImageTests = ["ImgHasAltNew","VerifyAltTag"];
 
