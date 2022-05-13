@@ -51,6 +51,12 @@ const loadPlugin = () => {
                   label: 'Links',
                   id: 'testLinks',
                   labelStyle: 'margin-left: 30px;'
+                },
+                {
+                  type: 'checkbox',
+                  label: 'Color Contrast',
+                  id: 'testColor',
+                  labelStyle: 'margin-left: 30px;'
                 }
               ],
             },
@@ -63,7 +69,8 @@ const loadPlugin = () => {
               "Headings": menu.getValueOf( 'a11yTOC',  'testHeadings' ),
               "Images":   menu.getValueOf( 'a11yTOC',  'testImages'   ),
               "Tables":   menu.getValueOf( 'a11yTOC',  'testTables'   ),
-              "Links":    menu.getValueOf( 'a11yTOC',  'testLinks'    )
+              "Links":    menu.getValueOf( 'a11yTOC',  'testLinks'    ),
+              "Color":    menu.getValueOf( 'a11yTOC',  'testColor'    )
             };
 
             editor.execCommand('a11ychecker')

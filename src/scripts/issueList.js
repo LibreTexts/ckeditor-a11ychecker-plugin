@@ -121,14 +121,14 @@ var customIssues = [
         quickfixName: ''
     },
     // DO NOT PUSH YET
-    {
-        selector: 'div',
-        testability: 'Notice',
-        id: 'DivsShouldBeSections',
-        title: 'Div elements should be sections',
-        desc: 'All divs in LibreTexts should be section landmarks instead.',
-        quickfixName: 'DivToSection'
-    },
+    // {
+    //     selector: 'div',
+    //     testability: 'Notice',
+    //     id: 'DivsShouldBeSections',
+    //     title: 'Div elements should be sections',
+    //     desc: 'All divs in LibreTexts should be section landmarks instead.',
+    //     quickfixName: 'DivToSection'
+    // },
     // {
     //     selector: 'th p',
     //     testability: 'Error',
@@ -144,11 +144,12 @@ var headingTests = ["pNotUsedAsHeader", "headerH1","headerH2","headerH3","header
 var imageTests = ["imgAltTextNotRedundant","imgShouldNotHaveTitle","imgAltIsDifferent","imgAltIsTooLong","imgWithEmptyAlt", "imgAltNotEmptyInAnchor"];
 var tableTests = ["tableWithBothHeadersUseScope","tableComplexHasSummary","tableSummaryDoesNotDuplicateCaption", "tableUsesCaption"];
 var linkTests = ["aLinksDontOpenNewWindow", "aAdjacentWithSameResourceShouldBeCombined","aImgAltNotRepetitive", "aSuspiciousLinkText"];
+var colorTests = ["colorFontContrast"];
 var customHeadingTests = ["ReservedHeaders"];
 var customImageTests = ["ImgHasAltNew","VerifyAltTag"];
 
 
-export var issueList, issueMapping, customIssues, headingTests, imageTests, tableTests, linkTests, customHeadingTests, customImageTests;
+export var issueList, issueMapping, customIssues, headingTests, imageTests, tableTests, linkTests, colorTests, customHeadingTests, customImageTests;
 
 /*
 aAdjacentWithSameResourceShouldBeCombined

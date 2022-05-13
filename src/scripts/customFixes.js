@@ -1,4 +1,4 @@
-import { customIssues, issueList, headingTests, imageTests, tableTests, customHeadingTests, customImageTests, linkTests } from "./issueList";
+import { customIssues, issueList, headingTests, imageTests, tableTests, customHeadingTests, customImageTests, linkTests, colorTests } from "./issueList";
 import { filteredIssues } from "./loadPlugin";
 
 const loadCustomFixes = () => {
@@ -43,7 +43,8 @@ const loadCustomFixes = () => {
                     testImages = filteredIssues["Images"],
                     testTables = filteredIssues["Tables"],
                     testLinks = filteredIssues["Links"],
-                    allFalse = !(testAll || testHeadings || testImages || testTables || testLinks);
+                    testColor = filteredIssues["Color"],
+                    allFalse = !(testAll || testHeadings || testImages || testTables || testLinks || testColor);
                     
 
                 // If the user selected all, we don't need to filter issues.
@@ -57,6 +58,7 @@ const loadCustomFixes = () => {
                 if (testImages)   { newGuidelines.push(...imageTests);    newCustomIssues.push(...customImageTests)   };
                 if (testTables)   { newGuidelines.push(...tableTests); };
                 if (testLinks)    { newGuidelines.push(...linkTests);  };
+                if (testColor)    { newGuidelines.push(...colorTests); };
 
 
                 // Custom issue guidelines and the built-in guidelines can NOT be empty, otherwise terrible bugs will occur.
