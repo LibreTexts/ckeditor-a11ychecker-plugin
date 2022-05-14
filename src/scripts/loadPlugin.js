@@ -26,37 +26,43 @@ const loadPlugin = () => {
                   type: 'checkbox',
                   label: 'Test for all accessibility issues (DEFAULT)',
                   id: 'testAll',
-                  labelStyle: 'margin-left: 30px;'
+                  labelStyle: 'margin-left: 30px;',
+                  accessKey: '1'
                 },
                 {
                   type: 'checkbox',
                   label: 'Headings',
                   id: 'testHeadings',
-                  labelStyle: 'margin-left: 30px;'
+                  labelStyle: 'margin-left: 30px;',
+                  accessKey: '2'
                 },
                 {
                   type: 'checkbox',
                   label: 'Alt Image Tags',
                   id: 'testImages',
-                  labelStyle: 'margin-left: 30px;'
+                  labelStyle: 'margin-left: 30px;',
+                  accessKey: '3'
                 },
                 {
                   type: 'checkbox',
                   label: 'Tables',
                   id: 'testTables',
-                  labelStyle: 'margin-left: 30px;'
+                  labelStyle: 'margin-left: 30px;',
+                  accessKey: '4'
                 },
                 {
                   type: 'checkbox',
                   label: 'Links',
                   id: 'testLinks',
-                  labelStyle: 'margin-left: 30px;'
+                  labelStyle: 'margin-left: 30px;',
+                  accessKey: '5'
                 },
                 {
                   type: 'checkbox',
                   label: 'Color Contrast',
                   id: 'testColor',
-                  labelStyle: 'margin-left: 30px;'
+                  labelStyle: 'margin-left: 30px;',
+                  accessKey: '6'
                 }
               ],
             },
@@ -75,7 +81,7 @@ const loadPlugin = () => {
 
             editor.execCommand('a11ychecker')
           }
-        };
+        }
       });
 
       editor.addCommand('testDialog', new CKEDITOR.dialogCommand('a11yTestDialog'));
