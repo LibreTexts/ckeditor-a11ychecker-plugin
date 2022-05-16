@@ -26,47 +26,44 @@ const loadPlugin = () => {
                   type: 'checkbox',
                   label: 'Test for all accessibility issues (DEFAULT)',
                   id: 'testAll',
-                  labelStyle: 'margin-left: 30px;',
-                  accessKey: '1'
+                  labelStyle: 'margin-left: 30px;'
                 },
                 {
                   type: 'checkbox',
                   label: 'Headings',
                   id: 'testHeadings',
                   labelStyle: 'margin-left: 30px;',
-                  accessKey: '2'
                 },
                 {
                   type: 'checkbox',
                   label: 'Alt Image Tags',
                   id: 'testImages',
                   labelStyle: 'margin-left: 30px;',
-                  accessKey: '3'
                 },
                 {
                   type: 'checkbox',
                   label: 'Tables',
                   id: 'testTables',
                   labelStyle: 'margin-left: 30px;',
-                  accessKey: '4'
                 },
                 {
                   type: 'checkbox',
                   label: 'Links',
                   id: 'testLinks',
                   labelStyle: 'margin-left: 30px;',
-                  accessKey: '5'
                 },
                 {
                   type: 'checkbox',
                   label: 'Color Contrast',
                   id: 'testColor',
                   labelStyle: 'margin-left: 30px;',
-                  accessKey: '6'
                 }
               ],
             },
           ],
+
+          // When the user presses OK, it will get the values of each of the checkboxes,
+          // then send this data to customFixes to filter.
           onOk() {
             const menu = this;
 
@@ -80,7 +77,24 @@ const loadPlugin = () => {
             };
 
             editor.execCommand('a11ychecker')
+          },
+
+          // When the dialog loads in, this will set up a mapping of the keys 1, 2, 3, etc. to the corresponding test.
+          // Used for easier keyboard access when selecting tests.
+          onLoad() {
+            const menu = this;
+            const key_test_map = { '1': 'testAll', '2': 'testHeadings', '3': 'testImages', '4': 'testTables', '5': 'testLinks', '6': 'testColor' };
+
+            CKEDITOR.document.on("keydown", function(evt) {
+              let key = evt.data.$.key;
+
+              if ( key in key_test_map ) { 
+                let val = menu.getValueOf('a11yTOC', key_test_map[key]);
+                menu.setValueOf('a11yTOC', key_test_map[key], !val); 
+              }
+            })
           }
+
         }
       });
 
