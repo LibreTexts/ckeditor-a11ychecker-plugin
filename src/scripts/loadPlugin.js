@@ -24,7 +24,7 @@ const loadPlugin = () => {
                 },
                 {
                   type: 'checkbox',
-                  label: 'Test for all accessibility issues (DEFAULT)',
+                  label: 'All accessibility issues (DEFAULT)',
                   id: 'testAll',
                   labelStyle: 'margin-left: 30px;'
                 },
@@ -83,6 +83,7 @@ const loadPlugin = () => {
           // Used for easier keyboard access when selecting tests.
           onLoad() {
             const menu = this;
+            console.log(menu);
             const key_test_map = { '1': 'testAll', '2': 'testHeadings', '3': 'testImages', '4': 'testTables', '5': 'testLinks', '6': 'testColor' };
 
             CKEDITOR.document.on("keydown", function(evt) {
