@@ -7,7 +7,7 @@ var issueList = [
     "blockquoteNotUsedForIndentation",
     "documentVisualListsAreMarkedUp",
     "imgAltNotEmptyInAnchor",
-    "imgAltTextNotRedundant",
+    //"imgAltTextNotRedundant",
     "imgShouldNotHaveTitle",
     "pNotUsedAsHeader",
     "tableDataShouldHaveTh",
@@ -70,7 +70,8 @@ var issueMapping = {
     tableWithBothHeadersUseScope:["TableScope"],
     tableSummaryDoesNotDuplicateCaption:["ChangeTableSummary"],
     tableComplexHasSummary:["AddTableSummary"],
-    colorFontContrast:["ColorContrastFix"]
+    colorFontContrast:["ColorContrastFix"],
+    //RemoveP:["RemoveEmptyPFix"]
 }
 
 // Custom tests + fixes
@@ -80,14 +81,14 @@ If there is no quick fix name available, just leave quickfixName blank.
 *************************/
 
 var customIssues = [
-    {
-        selector: 'img[alt]:not(img[alt].alt-tag-verified), img[alt=" "]:not(img[alt=" "].alt-tag-verified',
-        testability: 'Notice',
-        id: 'VerifyAltTag',
-        title: 'Verify the alt tag',
-        desc: 'Verify that the alt tag correctly describes the image. If the alt tag is blank, verify that it is decorative or that it has a caption describing the image.',
-        quickfixName: 'ImgAltVerify'
-    },
+    // {
+    //     selector: 'img[alt]:not(img[alt].alt-tag-verified), img[alt=" "]:not(img[alt=" "].alt-tag-verified',
+    //     testability: 'Notice',
+    //     id: 'VerifyAltTag',
+    //     title: 'Verify the alt tag',
+    //     desc: 'Verify that the alt tag correctly describes the image. If the alt tag is blank, verify that it is decorative or that it has a caption describing the image.',
+    //     quickfixName: 'ImgAltVerify'
+    // },
     {
         selector: 'h5:not(section h5, div h5),h6:not(section h6, div h6)',
         testability: 'Error',
@@ -120,6 +121,14 @@ var customIssues = [
         desc: 'If you are reading this, this is a dummy class that is kept for development purposes. Please rename the class of this element.',
         quickfixName: ''
     },
+    // {
+    //     selector: 'figure p:not(figcaption p)',
+    //     testability: 'Error',
+    //     id: 'RemoveP',
+    //     title: 'Remove p tags in figures',
+    //     desc: 'Title',
+    //     quickfixName: 'RemoveEmptyPFix'
+    // }
     // DO NOT PUSH YET
     // {
     //     selector: 'div',
@@ -141,12 +150,12 @@ var customIssues = [
 
 // TODO: probably make into one big object to export
 var headingTests = ["pNotUsedAsHeader", "headerH1","headerH2","headerH3","headerH4","headerH5","headerH6"];
-var imageTests = ["imgAltTextNotRedundant","imgShouldNotHaveTitle","imgAltIsDifferent","imgAltIsTooLong","imgWithEmptyAlt", "imgAltNotEmptyInAnchor"];
+var imageTests = ["imgShouldNotHaveTitle","imgAltIsDifferent","imgAltIsTooLong","imgWithEmptyAlt", "imgAltNotEmptyInAnchor"];
 var tableTests = ["tableWithBothHeadersUseScope","tableComplexHasSummary","tableSummaryDoesNotDuplicateCaption", "tableUsesCaption"];
 var linkTests = ["aLinksDontOpenNewWindow", "aAdjacentWithSameResourceShouldBeCombined","aImgAltNotRepetitive", "aSuspiciousLinkText"];
 var colorTests = ["colorFontContrast"];
 var customHeadingTests = ["ReservedHeaders"];
-var customImageTests = ["ImgHasAltNew","VerifyAltTag"];
+var customImageTests = ["ImgHasAltNew"];
 
 
 export var issueList, issueMapping, customIssues, headingTests, imageTests, tableTests, linkTests, colorTests, customHeadingTests, customImageTests;
