@@ -37,19 +37,12 @@
 			 */
              RemovePFix.prototype.fix = function( formAttributes, callback ) {
 				var element = this.issue.element.getAscendant( 'figure' );
-
 				let textArray = element.find('p, figcaption').toArray(),
-					newTextContent = '';
+					newTextContent = element.getText();
 
-				console.log(textArray);
-
-				textArray.forEach((item) => {
-					newTextContent += item.getText();
-					item.remove();
-				})
+				textArray.forEach((item) => { item.remove(); })
 				
 				element.appendHtml(`<figcaption>${newTextContent}</figcaption>`)
-
 
 				// Callback
 				if ( callback ) {
