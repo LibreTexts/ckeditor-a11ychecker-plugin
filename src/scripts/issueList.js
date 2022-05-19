@@ -7,7 +7,6 @@ var issueList = [
     "blockquoteNotUsedForIndentation",
     "documentVisualListsAreMarkedUp",
     "imgAltNotEmptyInAnchor",
-    //"imgAltTextNotRedundant",
     "imgShouldNotHaveTitle",
     "pNotUsedAsHeader",
     "tableDataShouldHaveTh",
@@ -35,6 +34,7 @@ var issueList = [
     "tableUsesCaption",
     "colorFontContrast",
     'documentIDsMustBeUnique'
+    //"imgAltTextNotRedundant"
 ];
 
 // Mapping pre-built issues with quick fixes
@@ -81,14 +81,6 @@ If there is no quick fix name available, just leave quickfixName blank.
 *************************/
 
 var customIssues = [
-    // {
-    //     selector: 'img[alt]:not(img[alt].alt-tag-verified), img[alt=" "]:not(img[alt=" "].alt-tag-verified',
-    //     testability: 'Notice',
-    //     id: 'VerifyAltTag',
-    //     title: 'Verify the alt tag',
-    //     desc: 'Verify that the alt tag correctly describes the image. If the alt tag is blank, verify that it is decorative or that it has a caption describing the image.',
-    //     quickfixName: 'ImgAltVerify'
-    // },
     {
         selector: 'h5:not(section h5, div h5),h6:not(section h6, div h6)',
         testability: 'Error',
@@ -105,14 +97,25 @@ var customIssues = [
         desc: 'All text elements should be at least 10pt font size.',
         quickfixName: 'FontSizeFix'
     },
+    // Images that do not have alts
+    //      AND do not have media tags
+    //      AND are not children of a tags
     {
         selector: 'img:not([alt]):not([media], a img:not([alt]))',
         testability: 'Error',
         id: 'ImgHasAltNew',
-            title: 'Images must provide alternative text',
+        title: 'Images must provide alternative text',
         desc: 'Alternative text needs to convey the same information as the image. This text will be used when the browser has disabled images, the image was not found on the server, or by non-sighted visitors who use screen readers.',
         quickfixName: 'ImgAlt'
     },
+    {
+        selector: 'figure p',
+        testability: 'Error',
+        id: 'CombineFigcaptionAndPTags',
+        title: 'Use a single figcaption in a figure',
+        desc: "Accessibility checker has noticed in the HTML that text other than the figcaption is present. Pressing quick fix will combine it for you into one caption. " + "<br/><br/>" + "Tip: When typing a new line, use SHIFT + ENTER.",
+        quickfixName: 'RemovePFix'
+    }, 
     {
         selector: 'h1.dummyClass',
         testability: 'Error',
@@ -121,6 +124,15 @@ var customIssues = [
         desc: 'If you are reading this, this is a dummy class that is kept for development purposes. Please rename the class of this element.',
         quickfixName: ''
     },
+    // !! DO NOT PUSH YET, ONLY COMMENT OUT FOR TESTING !!
+    // {
+    //     selector: 'img[alt]:not(img[alt].alt-tag-verified), img[alt=" "]:not(img[alt=" "].alt-tag-verified',
+    //     testability: 'Notice',
+    //     id: 'VerifyAltTag',
+    //     title: 'Verify the alt tag',
+    //     desc: 'Verify that the alt tag correctly describes the image. If the alt tag is blank, verify that it is decorative or that it has a caption describing the image.',
+    //     quickfixName: 'ImgAltVerify',
+    // },
     // {
     //     selector: 'figure p:not(figcaption p)',
     //     testability: 'Error',
@@ -129,7 +141,6 @@ var customIssues = [
     //     desc: 'Title',
     //     quickfixName: 'RemoveEmptyPFix'
     // }
-    // DO NOT PUSH YET
     // {
     //     selector: 'div',
     //     testability: 'Notice',
