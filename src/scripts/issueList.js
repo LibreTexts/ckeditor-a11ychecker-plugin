@@ -113,7 +113,7 @@ var customIssues = [
         testability: 'Error',
         id: 'CombineFigcaptionAndPTags',
         title: 'Use a single figcaption in a figure',
-        desc: "Accessibility checker has noticed in the HTML that text other than the figcaption is present. Pressing quick fix will combine it for you into one caption. " + "<br/><br/>" + "Tip: When typing a new line, use SHIFT + ENTER.",
+        desc: "Accessibility checker has noticed in the HTML that text other than the figcaption is present in this figure. Pressing quick fix will combine it for you into one caption. " + "<br/><br/>" + "Tip: When typing a new line, use SHIFT + ENTER.",
         quickfixName: 'RemovePFix'
     }, 
     {
