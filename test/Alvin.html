@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>alt image</title>
+        <script src="../node_modules/ckeditor4/ckeditor.js"></script>
+        <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+    </head>
+    <body>
+
+        <script>
+            var i = 0;
+            $.getJSON( "https://ckeditor.com/docs/ckeditor4/4.16.1/examples/assets/plugins/a11ychecker/libs/quail/tests.json", function( data ) {
+                var items = [];
+                $.each( data, function( key, val ) {
+                    items.push( "<li>" + key + "</li>" );
+                    i += 1;
+                });
+
+                $( "<ul/>", {
+                    "class": "my-new-list",
+                    html: items.join( "" )
+                }).appendTo( "body" );
+
+                console.log(i);
+            });
+		 
+
+        </script>
+    </body>
+</html>
+
