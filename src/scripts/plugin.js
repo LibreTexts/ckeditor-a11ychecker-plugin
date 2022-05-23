@@ -9,6 +9,11 @@ const registerPlugin = () => {
     loadPlugin();
     loadCustomFixes();
     addCss();
+
+    // Changing magic line config
+    CKEDITOR.dtd.$block['figure'] = 1;
+    CKEDITOR.config.magicline_everywhere = true;
+
   if (CKEDITOR.config.extraPlugins === '') {
     CKEDITOR.config.extraPlugins += 'a11ychecker,a11yButton';
   } else {
