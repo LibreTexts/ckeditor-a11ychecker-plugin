@@ -1,4 +1,10 @@
-// Pre-built issues
+/*
+*
+* This is where we determine what issues to test for, and where we map those issues with a quick fix.
+*
+*/
+
+// Pre-built issues. You can find them all at the bottom of the file.
 var issueList = [
     "aLinksDontOpenNewWindow", 
     "aAdjacentWithSameResourceShouldBeCombined",
@@ -73,11 +79,12 @@ var issueMapping = {
     //RemoveP:["RemoveEmptyPFix"]
 }
 
-// Custom tests + fixes
-/*************************
-Add all custom tests here as an object to the end of customIssues array.
-If there is no quick fix name available, just leave quickfixName blank.
-*************************/
+/*
+* Custom tests + fixes
+*
+* Add all custom tests here as an object to the end of customIssues array.
+* If there is no quick fix name available, just leave quickfixName blank.
+*/
 
 var customIssues = [
     {
@@ -96,10 +103,8 @@ var customIssues = [
         desc: 'All text elements should be at least 10pt font size.',
         quickfixName: 'FontSizeFix'
     },
-    // Images that do not have alts
-    //      AND do not have media tags
-    //      AND are not children of a tags
     {
+        // !! We are checking for not media attributes because they break the plugin !!
         selector: 'img:not([alt]):not([media], a img:not([alt]))',
         testability: 'Error',
         id: 'ImgHasAltNew',
@@ -158,7 +163,7 @@ var customIssues = [
     // },
 ]
 
-// TODO: probably make into one big object to export
+// These are categories of issues that help us filter. Add accordingly.
 var headingTests = ["pNotUsedAsHeader", "headerH1","headerH2","headerH3","headerH4","headerH5","headerH6"];
 var imageTests = ["imgShouldNotHaveTitle","imgAltIsDifferent","imgAltIsTooLong","imgWithEmptyAlt", "imgAltNotEmptyInAnchor"];
 var tableTests = ["tableWithBothHeadersUseScope","tableComplexHasSummary","tableSummaryDoesNotDuplicateCaption", "tableUsesCaption"];
@@ -172,6 +177,8 @@ var customImageTests = ["ImgHasAltNew"];
 export var issueList, issueMapping, customIssues, headingTests, imageTests, tableTests, linkTests, colorTests, labelTests, customHeadingTests, customImageTests;
 
 /*
+MASTER LIST
+***********
 aAdjacentWithSameResourceShouldBeCombined
 aImgAltNotRepetitive
 aInPHasADistinctStyle

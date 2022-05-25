@@ -1,11 +1,16 @@
+/**
+* @license Copyright (c) 2014-2022, CKSource - Frederico Knabben. All rights reserved.
+* For licensing, see LICENSE.md or https://ckeditor.com/license
+*
+*
+*   This file is the minified code for the a11ychecker. 
+*/
+
+
 import {issueList, issueMapping} from "./issueList";
 
 const addA11yChecker = () => {
     console.log("adding a11ychecker..");
-/**
-* @license Copyright (c) 2014-2022, CKSource - Frederico Knabben. All rights reserved.
-* For licensing, see LICENSE.md or https://ckeditor.com/license
-*/
 
 !function(){var t,e,n,i,s,a,o,r,c,u,l,d,h,p,f,g,m,v,b,y,x,w,C,T,k,I,E;C=function(){"use strict";function t(){this.list=[]}function e(t,e){var n=0;return n=t.element.getPosition(e.element)&CKEDITOR.POSITION_FOLLOWING?1:-1}return t.prototype={list:[],currentIndex:-1},t.prototype.constructor=t,t.prototype.each=function(t){var e=this.list;if(e.map)e.map(t,this);else for(var n=0,i=e.length;i>n;n++)t.call(this,e[n])},t.prototype.count=function(t){if(t){var e=0,n=0;for(n=0;n<this.list.length;n++)this.list[n].isIgnored()||(e+=1);return e}return this.list.length},t.prototype.addItem=function(t){this.list.push(t)},t.prototype.getItem=function(t){var e=this.list[t];return e?e:null},t.prototype.clear=function(){this.list.splice(0,this.list.length),this.resetFocus()},t.prototype.resetFocus=function(){if(-1!==this.currentIndex){var t=this.getFocused();this.currentIndex=-1,this.fire("focusChanged",{current:null,previous:t})}},t.prototype.getFocused=function(){return-1!=this.currentIndex?this.getItem(this.currentIndex):null;
 },t.prototype.moveTo=function(t){if(!this.getItem(t))return!1;var e=this.getFocused();return this.currentIndex=t,this.fire("focusChanged",{current:this.getItem(t),previous:e}),!0},t.prototype.next=function(){return this.count()?(this.currentIndex+1>this.count()-1?0!==this.currentIndex&&this.moveTo(0):this.moveTo(this.currentIndex+1),this.getFocused()):null},t.prototype.prev=function(){if(!this.count())return null;var t=this.count()-1;return 0===this.currentIndex||-1==this.currentIndex?this.currentIndex!=t&&this.moveTo(t):this.moveTo(this.currentIndex-1),this.getFocused()},t.prototype.getIssueByElement=function(t){var e=null;return this.each(function(n){n.element.equals(t)&&(e=n)}),e},t.prototype.getIssuesByElement=function(t,e){for(var n,i,s=[],a=this.list,o=0,r=a.length;r>o;o++)n=a[o],i=!e||!n.isIgnored(),n.element.equals(t)&&i&&s.push(n);return s},t.prototype.indexOf=function(t){return CKEDITOR.tools.indexOf(this.list,t)},t.prototype.getIssueByIndex=function(t){var e=this.getItem(t);return e.element;

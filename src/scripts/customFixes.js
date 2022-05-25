@@ -1,3 +1,9 @@
+/*
+*
+* This is the file where custom issues (which are specified in issueList) are created.
+* This is also where filtering happens. See filterIssues().
+*/
+
 import { customIssues, issueList, headingTests, imageTests, tableTests, customHeadingTests, customImageTests, linkTests, colorTests, labelTests } from "./issueList";
 import { filteredIssues } from "./loadPlugin";
 
@@ -5,6 +11,7 @@ const loadCustomFixes = () => {
     CKEDITOR.on("instanceReady", function() {
         var a11ychecker = CKEDITOR.plugins.a11ychecker;
 
+        // This 
         a11ychecker.Engine.prototype.on( 'process', function( evt ) {
             var Issue = a11ychecker.Issue,
                 contentElement = evt.data.contentElement,

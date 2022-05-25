@@ -1,3 +1,10 @@
+/*
+*
+* This is the main function that registers everything needed to run a11ychecker.
+* Small functions are added here such as adding CSS, changing the magic line, and registering the plugin to the config.
+* Feel free to organize these functions into their own file or keep them here.
+*/
+
 import addBalloonPanel from "./balloonpanel";
 import "../styles/contents.css";
 import loadPlugin from "./loadPlugin";

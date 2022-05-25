@@ -1,3 +1,10 @@
+/*
+*
+* File of a11yButton, which is a mini plugin that activates the table of contents window, which activates a11ychecker.
+* a11yButton is used so that we can create dialogs and filtering of issues.
+* You can find the Table of Contents here.
+*/
+
 import "../styles/index.scss";
 
 var filteredIssues = {};

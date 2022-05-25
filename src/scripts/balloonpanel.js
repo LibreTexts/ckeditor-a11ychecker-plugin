@@ -1,16 +1,13 @@
-// Balloon panel minified
-
-const addBalloonPanel = () => {
 /**
  * @license Copyright (c) 2003-2022, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
+ *
+ * 
+ * This file is the code for the balloon panel.
+ * You can edit the position of the balloon panel here (CTRL + F "ALVIN NOTE").
  */
 
-/**
- * @fileOverview The Balloon Panel plugin that provides an ability to create a floating, balloon-shaped
- * container capable of presenting content at a precise position in the document.
- */
-
+const addBalloonPanel = () => {
  ( function() {
 	'use strict';
 
@@ -20,6 +17,7 @@ const addBalloonPanel = () => {
 	CKEDITOR.plugins.add( 'balloonpanel', {
 		init: function() {
 			if ( !stylesLoaded ) {
+				// TODO: Change this source to host from a11y instead.
 				CKEDITOR.document.appendStyleSheet('https://test.libretexts.org/alvin/public/ckeditor-a11ychecker/dist/balloonpanel/skins/moono-lisa/balloonpanel.css' );
 				stylesLoaded = true;
 			}

@@ -1,3 +1,7 @@
+ /*
+This is where we override the mindtouch settings to display the a11ychecker icon.
+ */
+ 
  // force overwirte css settings from MindTouch
 .cke_button_icon.cke_button__a11ybutton_icon {
     background-image: url(https://test.libretexts.org/alvin/public/ckeditor-a11ychecker/dist/icons/a11ychecker.png) !important;
