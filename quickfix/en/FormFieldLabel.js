@@ -30,10 +30,29 @@
 			TextLabelFix.prototype.constructor = TextLabelFix;
 
 			TextLabelFix.prototype.display = function( form ) {
+				let recommendedPosition,
+					inputType = this.issue.element.getAttribute( "type" ),
+					lang = this.lang,
+					posOptions = {
+						"Left": lang["position-left"],
+						"Right": lang["position-right"],
+						"Above": lang["position-above"]
+					},
+					isCheckboxOrRadio = inputType == "checkbox" || inputType == "radio";
+
+				isCheckboxOrRadio ? recommendedPosition = "Right" : recommendedPosition = "Above";
+				posOptions[recommendedPosition] += " (Recommended)";
+
 				form.setInputs( {
 					label: {
 						type: 'text',
 						label: this.lang.textLabel
+					},
+					select: {
+						type: 'select',
+						label: 'Position',
+						value: recommendedPosition,
+						options: posOptions
 					}
 				} );
 			};
@@ -46,13 +65,14 @@
 			 * as a first parameter.
 			 */
              TextLabelFix.prototype.fix = function( formAttributes, callback ) {
-				var element = this.issue.element;
-                let id = element.getAttribute("id");
+				let element = this.issue.element,
+					label = new CKEDITOR.dom.element( 'label' ),
+                	id = element.getAttribute("id"),
+					selection = formAttributes.select;
 
-                var label = new CKEDITOR.dom.element( 'label' );
                 label.appendText(formAttributes.label);
 
-
+				// Determining if the input has an ID
                 if (id == null) { 
 					element.setAttribute("id", formAttributes.label);
 					label.setAttribute("for", formAttributes.label);
@@ -60,7 +80,22 @@
 					label.setAttribute("for", id);
 				}
 
-                element.insertBeforeMe(label);
+				// Determining where to place the label
+				switch( selection ) {
+					case "Right":
+						label.setStyle("display", "inline-block");
+						label.setStyle("margin-left", "30px");
+						label.insertAfter(element);
+						break;
+					case "Above":
+						label.setStyle("display", "block");
+						element.insertBeforeMe(label);
+						break;
+					default:
+						label.setStyle("display", "inline-block");
+						element.insertBeforeMe(label);
+						break;
+				}
 
 				// Callback
 				if ( callback ) {
@@ -80,7 +115,11 @@
 				return ret;
 			};
 
-			TextLabelFix.prototype.lang = {"textLabel":"Label","errorEmpty":"Label title can not be empty"};
+			TextLabelFix.prototype.lang = {
+				"textLabel":"Label","errorEmpty":"Label title can not be empty", 
+				"position-left": "Left", 
+				"position-right": "Right",
+				"position-above": "Above"};
 			// Add to our quick fixes
 			CKEDITOR.plugins.a11ychecker.quickFixes.add( 'en/FormFieldLabel', TextLabelFix);
 		}
