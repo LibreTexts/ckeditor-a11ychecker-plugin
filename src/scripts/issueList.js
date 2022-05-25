@@ -164,11 +164,12 @@ var imageTests = ["imgShouldNotHaveTitle","imgAltIsDifferent","imgAltIsTooLong",
 var tableTests = ["tableWithBothHeadersUseScope","tableComplexHasSummary","tableSummaryDoesNotDuplicateCaption", "tableUsesCaption"];
 var linkTests = ["aLinksDontOpenNewWindow", "aAdjacentWithSameResourceShouldBeCombined","aImgAltNotRepetitive", "aSuspiciousLinkText"];
 var colorTests = ["colorFontContrast"];
+var labelTests = ["inputTextHasLabel", "checkboxHasLabel", "radioHasLabel", "textareaHasAssociatedLabel", "selectHasAssociatedLabel", "passwordHasLabel", "fileHasLabel", "fieldsetHasLabel"];
 var customHeadingTests = ["ReservedHeaders"];
 var customImageTests = ["ImgHasAltNew"];
 
 
-export var issueList, issueMapping, customIssues, headingTests, imageTests, tableTests, linkTests, colorTests, customHeadingTests, customImageTests;
+export var issueList, issueMapping, customIssues, headingTests, imageTests, tableTests, linkTests, colorTests, labelTests, customHeadingTests, customImageTests;
 
 /*
 aAdjacentWithSameResourceShouldBeCombined

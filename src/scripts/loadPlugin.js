@@ -75,6 +75,15 @@ const loadPlugin = () => {
                   focus: function() {
                     $('#testColor').focus();
                   }
+                },
+                {
+                  type: 'checkbox',
+                  label: '7. Labels',
+                  id: 'testLabels',
+                  labelStyle: 'margin-left: 30px;',
+                  focus: function() {
+                    $('#testLabels').focus();
+                  }
                 }
               ],
             },
@@ -91,7 +100,8 @@ const loadPlugin = () => {
               "Images":   menu.getValueOf( 'a11yTOC', 'testImages'   ),
               "Tables":   menu.getValueOf( 'a11yTOC', 'testTables'   ),
               "Links":    menu.getValueOf( 'a11yTOC', 'testLinks'    ),
-              "Color":    menu.getValueOf( 'a11yTOC', 'testColor'    )
+              "Color":    menu.getValueOf( 'a11yTOC', 'testColor'    ),
+              "Labels":    menu.getValueOf( 'a11yTOC', 'testLabels'    )
             };
 
             editor.execCommand('a11ychecker')
@@ -101,7 +111,7 @@ const loadPlugin = () => {
           // Used for easier keyboard access when selecting tests.
           onLoad() {
             const menu = this;
-            const key_test_map = { '1': 'testAll', '2': 'testHeadings', '3': 'testImages', '4': 'testTables', '5': 'testLinks', '6': 'testColor' };
+            const key_test_map = { '1': 'testAll', '2': 'testHeadings', '3': 'testImages', '4': 'testTables', '5': 'testLinks', '6': 'testColor', '7': 'testLabels' };
 
             CKEDITOR.document.on("keydown", function(evt) {
 
