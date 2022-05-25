@@ -4,7 +4,6 @@ var issueList = [
     "aAdjacentWithSameResourceShouldBeCombined",
     "aImgAltNotRepetitive",
     "aMustNotHaveJavascriptHref",
-    "blockquoteNotUsedForIndentation",
     "documentVisualListsAreMarkedUp",
     "imgAltNotEmptyInAnchor",
     "imgShouldNotHaveTitle",
@@ -33,7 +32,8 @@ var issueList = [
     "fieldsetHasLabel",
     "tableUsesCaption",
     "colorFontContrast",
-    'documentIDsMustBeUnique'
+    'documentIDsMustBeUnique',
+    //"blockquoteNotUsedForIndentation",
 ];
 
 // Mapping pre-built issues with quick fixes
