@@ -39,6 +39,7 @@ var issueList = [
     "tableUsesCaption",
     "colorFontContrast",
     'documentIDsMustBeUnique',
+    "formButtonsHaveValue"
     //"blockquoteNotUsedForIndentation",
 ];
 
@@ -76,6 +77,8 @@ var issueMapping = {
     tableSummaryDoesNotDuplicateCaption:["ChangeTableSummary"],
     tableComplexHasSummary:["AddTableSummary"],
     colorFontContrast:["ColorContrastFix"],
+    formButtonsHaveValue: ["FormButtonValue"]
+
     //RemoveP:["RemoveEmptyPFix"]
 }
 
