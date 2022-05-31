@@ -35,7 +35,8 @@ function addCss() {
 function changeMagicLineConfig() {
     // Ensures that figures are considered block level (see https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_dtd.html)
     CKEDITOR.dtd.$block['figure'] = 1;
-
+    // List of elements that should not trigger a magic line -> must be attributes
+    // CKEDITOR.config.magicline_tabuList = [ 'p', 'h2' ];
     // Adds magic line to all block level elements that are specifid in CKEDITOR.dtd.$block
     CKEDITOR.config.magicline_everywhere = true;
 }
