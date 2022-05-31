@@ -37,7 +37,7 @@ var issueList = [
     "fileHasLabel",
     "fieldsetHasLabel",
     "tableUsesCaption",
-    // "colorFontContrast",
+    "colorFontContrast",
     'documentIDsMustBeUnique',
     "formButtonsHaveValue"
     //"blockquoteNotUsedForIndentation",
@@ -76,7 +76,7 @@ var issueMapping = {
     tableWithBothHeadersUseScope:["TableScope"],
     tableSummaryDoesNotDuplicateCaption:["ChangeTableSummary"],
     tableComplexHasSummary:["AddTableSummary"],
-    // colorFontContrast:["ColorContrastFix"],
+    colorFontContrast:["ColorContrastFix"],
     formButtonsHaveValue: ["FormButtonValue"]
 
     //RemoveP:["RemoveEmptyPFix"]
