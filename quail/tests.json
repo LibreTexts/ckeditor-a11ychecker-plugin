@@ -3928,7 +3928,7 @@
     },
     "description": {
       "de": "Der Alternativtext der Grafik sollte kurz und prägnant sein. Es sollte geprüft werden, ob Alternativtexte die länger als 100 Zeichen sind, gekürzt werden können",
-      "en": "Image alternative text should be clear and concise. Alternative text longer than 100 characters should be reviewed to see if it can be shortened.",
+      "en": "Image alternative text should be clear and concise. Alternative text longer than 150 characters should be reviewed to see if it can be shortened.",
       "nl": "Alle \"alt\"-attributen voor <code>img</code>-elementen moeten duidelijk en bondig zijn. Verifieer \"alt\"-attributen langer dan 100 tekens en kort ze in waar mogelijk.",
       "pt-br": "O texto alternativo da imagem deve ser claro e conciso. Texto alternativo com mais de 100 caracteres deve ser revisado para ver se ele pode ser encurtado."
     },
