@@ -2,7 +2,7 @@
 *
 * File of a11yButton, which is a mini plugin that activates the table of contents window, which activates a11ychecker.
 * a11yButton is used so that we can create dialogs and filtering of issues.
-* You can find the Table of Contents here.
+* You can find the Table of Contents dialog here.
 */
 
 import "../styles/index.scss";
@@ -91,6 +91,10 @@ const loadPlugin = () => {
                   focus: function() {
                     $('#testLabels').focus();
                   }
+                },
+                {
+                  type: 'html',
+                  html: '<footer style="font-size: 12px; margin-top: 20px;>Contact ckelibretext@ucdavis.edu for bug reporting.</footer>',
                 }
               ],
             },
@@ -108,7 +112,7 @@ const loadPlugin = () => {
               "Tables":   menu.getValueOf( 'a11yTOC', 'testTables'   ),
               "Links":    menu.getValueOf( 'a11yTOC', 'testLinks'    ),
               "Color":    menu.getValueOf( 'a11yTOC', 'testColor'    ),
-              "Labels":    menu.getValueOf( 'a11yTOC', 'testLabels'    )
+              "Labels":   menu.getValueOf( 'a11yTOC', 'testLabels'    )
             };
 
             editor.execCommand('a11ychecker')
