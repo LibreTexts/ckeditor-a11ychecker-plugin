@@ -92,6 +92,7 @@ var issueMapping = {
 var customIssues = [
     {
         selector: 'h5:not(section h5, div h5),h6:not(section h6, div h6)',
+        customSelector: null,
         testability: 'Error',
         id: 'ReservedHeaders',
         title: 'H5 and H6 is reserved for LibreTexts',
@@ -100,6 +101,7 @@ var customIssues = [
     },
     {
         selector: '.mt-font-size-8',
+        customSelector: null,
         testability: 'Notice',
         id: 'FontSizeIsTooSmall',
         title: 'Font size is too small',
@@ -109,6 +111,7 @@ var customIssues = [
     {
         // !! We are checking for not media attributes because they break the plugin !!
         selector: 'img:not([alt]):not([media], a img:not([alt]))',
+        customSelector: null,
         testability: 'Error',
         id: 'ImgHasAltNew',
         title: 'Images must provide alternative text',
@@ -117,6 +120,7 @@ var customIssues = [
     },
     {
         selector: 'figure p',
+        customSelector: null,
         testability: 'Error',
         id: 'CombineFigcaptionAndPTags',
         title: 'Use a single figcaption in a figure',
@@ -125,12 +129,30 @@ var customIssues = [
     }, 
     {
         selector: 'h1.dummyClass',
+        customSelector: null,
         testability: 'Error',
         id: 'DummyID',
         title: 'This is a dummy custom test.',
         desc: 'If you are reading this, this is a dummy class that is kept for development purposes. Please rename the class of this element.',
         quickfixName: ''
     },
+    // Do not push yet: This is checking for captions in video media
+    // {
+    //     selector: 'div.mt-video-widget',
+    //     customSelector: function( element ) {
+    //         if (element.getAttribute("data-video-url")) {
+    //             return element.getAttribute("data-video-url").indexOf("//www.youtube.com/embed/") !== -1;
+    //         } else if (element.getElementsByTag("iframe").getItem(0).getAttribute("src")) {
+    //             return element.getElementsByTag("iframe").getItem(0).getAttribute("src").indexOf("//player.vimeo.com/video/") !== -1;
+    //         }
+    //         return false;
+    //     },
+    //     testability: 'Notice',
+    //     id: 'embeddedMedia',
+    //     title: 'This is embedded media',
+    //     desc: 'This should mark embedded video media as a notice',
+    //     quickfixName: ''
+    // }
     // !! DO NOT PUSH YET, ONLY COMMENT OUT FOR TESTING !!
     // {
     //     selector: 'img[alt]:not(img[alt].alt-tag-verified), img[alt=" "]:not(img[alt=" "].alt-tag-verified',

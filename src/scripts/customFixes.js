@@ -26,15 +26,17 @@ const loadCustomFixes = () => {
                 }
 
                 CKEDITOR.tools.array.forEach( contentElement.find( data.selector ).toArray(), function( orig ) {
-                    issues.addItem( new Issue( {
-                        originalElement: orig,
-                        testability: testability,
-                        id: data.id,
-                        details: {
-                            title: data.title,
-                            descr: data.desc
-                        }
-                    }, a11ychecker.Engine.prototype ) );
+                    if (!data.customSelector || data.customSelector(orig)){
+                        issues.addItem( new Issue( {
+                            originalElement: orig,
+                            testability: testability,
+                            id: data.id,
+                            details: {
+                                title: data.title,
+                                descr: data.desc
+                            }
+                        }, a11ychecker.Engine.prototype ) );
+                    } 
                 });  
 
                 if (data.quickfixName) {
@@ -86,8 +88,6 @@ const loadCustomFixes = () => {
 
                 return;
             }
-            
-
             // Create new custom issues and filter out issues based on checkbox
             customIssues.forEach( (data) => { createNewIssue(data) });
             filterIssues();
