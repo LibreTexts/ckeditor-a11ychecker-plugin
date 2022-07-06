@@ -37,7 +37,7 @@ var issueList = [
     "fileHasLabel",
     "fieldsetHasLabel",
     "tableUsesCaption",
-    "colorFontContrast",
+    // "colorFontContrast",
     'documentIDsMustBeUnique',
     "formButtonsHaveValue"
     //"blockquoteNotUsedForIndentation",
@@ -76,7 +76,7 @@ var issueMapping = {
     tableWithBothHeadersUseScope:["TableScope"],
     tableSummaryDoesNotDuplicateCaption:["ChangeTableSummary"],
     tableComplexHasSummary:["AddTableSummary"],
-    colorFontContrast:["ColorContrastFix"],
+    // colorFontContrast:["ColorContrastFix"],
     formButtonsHaveValue: ["FormButtonValue"]
 
     //RemoveP:["RemoveEmptyPFix"]
@@ -87,6 +87,9 @@ var issueMapping = {
 *
 * Add all custom tests here as an object to the end of customIssues array.
 * If there is no quick fix name available, just leave quickfixName blank.
+*
+* If a custom test does not require a custom selector function, set customSelector to null
+* The custom selector function returns null if CKeditor should NOT mark as an issues
 */
 
 var customIssues = [
@@ -136,6 +139,86 @@ var customIssues = [
         desc: 'If you are reading this, this is a dummy class that is kept for development purposes. Please rename the class of this element.',
         quickfixName: ''
     },
+    // Do not push yet: This is for Acronyms
+    // {
+    //     selector: 'span.acronym',
+    //     customSelector: function(element) {
+    //         // Get inner text and parse into a list of words
+    //         let text = element.getHtml().split(" ");
+    //         let acronym = "";
+    //         text.forEach(function(word) {
+    //             if (word.toUpperCase() == word && word.length > 1 && word.indexOf(".") == -1) {
+    //                 acronym = word;
+    //             }
+    //         });
+    //         return acronym;
+    //     },
+    //     testability: 'Error',
+    //     id: 'AcronymInTag',
+    //     title: 'This page contains at least one acronym that should be within an abbr tag',
+    //     desc: 'Acronyms should be given a definition by adding a title to an abbr tag. Input "N/A" if this is not an acronym and should be ignored. If no input appears, press "Quick fix" to mark individual acronyms.',
+    //     quickfixName: 'AcronymFix'
+    // }
+    // custom color contrast NOT READY
+    /*{
+        selector: 'p',
+        customSelector: function(element){
+            function getColor(color) {
+                let colorHex = "";
+                let colors = color.slice(4).split(',');
+                colors.forEach(color => {
+                    let c = parseInt(color).toString(16);
+                    colorHex += (c.length == 1) ? "0" + c : c;
+                });
+                return colorHex;
+            };
+
+            // get foreground color and check for LibreTexts class mt-color-######
+            function getFgColor(element) {
+                let foreground = element.getComputedStyle('color') ? element.getComputedStyle('color') : 'rbg(0,0,0)';
+                let fgClass = element.getAscendant(function (e) {
+                    return e.type == 1 && e.getAttribute('class') ? e.getAttribute('class').indexOf('mt-color') != -1 : null;
+                }, true);
+                return fgClass ? fgClass.getAttribute('class').slice(9) : getColor(foreground);
+            }
+
+            function getBgColor(element) {
+                let background = element.getAscendant( function(e) {
+                    if (e!= 1) {
+                        return null;
+                    }
+                    return hasBackgroundColor(e.getComputedStyle('background-color'));
+                }, true );
+                if (!background) {
+                    return 'ffffff'; // Assume default background is white
+                }
+                // Check if mt-bgcolor-##### span exists because class supercedes style
+                let bgClass = element.getAscendant(function (e) {
+                    return e.type == 1 && e.getAttribute('class') ? e.getAttribute('class').indexOf('mt-bgcolor') != -1 : null;
+                }, true);
+                return bgClass ? bgClass.getAttribute('class').slice(11) : getColor(background.getComputedStyle('background-color'));
+            }
+
+            function hasBackgroundColor(bcolor) {
+                return bcolor !== 'rgba(0, 0, 0, 0)' && bcolor !== 'transparent';
+            };
+
+
+            function testElementContrast(element) {
+                console.log("foreground color: ", getFgColor(element));
+                console.log("background color: ", getBgColor(element));
+                return true;
+                // test that the colors pass the wcag color contrast
+            };
+
+            return testElementContrast(element);
+        },
+        testability: 'Error',
+        id: 'colorFontContrastCustom',
+        title: 'All elements should be checked for appropriate color contrast, excluding links',
+        desc: 'This checks that all elements (ignoring links) have a 5:1 color font contrast',
+        quickfixName: 'ColorContrastFix'
+    }*/
     // Do not push yet: This is checking for captions in video media
     // {
     //     selector: 'div.mt-video-widget',
@@ -193,13 +276,14 @@ var headingTests = ["pNotUsedAsHeader", "headerH1","headerH2","headerH3","header
 var imageTests = ["imgShouldNotHaveTitle","imgAltIsDifferent","imgAltIsTooLong","imgWithEmptyAlt", "imgAltNotEmptyInAnchor"];
 var tableTests = ["tableWithBothHeadersUseScope","tableComplexHasSummary","tableSummaryDoesNotDuplicateCaption", "tableUsesCaption"];
 var linkTests = ["aLinksDontOpenNewWindow", "aAdjacentWithSameResourceShouldBeCombined","aImgAltNotRepetitive", "aSuspiciousLinkText"];
-var colorTests = ["colorFontContrast"];
+var colorTests = ["KINGUseLongDateFormat"]; // change to "colorFontContrast" to re-enable color contrast checker
 var labelTests = ["inputTextHasLabel", "checkboxHasLabel", "radioHasLabel", "textareaHasAssociatedLabel", "selectHasAssociatedLabel", "passwordHasLabel", "fileHasLabel", "fieldsetHasLabel"];
 var customHeadingTests = ["ReservedHeaders"];
 var customImageTests = ["ImgHasAltNew"];
-
+// var customAbbreviationTests = ["AcronymInTag"];
 
 export var issueList, issueMapping, customIssues, headingTests, imageTests, tableTests, linkTests, colorTests, labelTests, customHeadingTests, customImageTests;
+// export var issueList, issueMapping, customIssues, headingTests, imageTests, tableTests, linkTests, colorTests, labelTests, customHeadingTests, customImageTests, customAbbreviationTests;
 
 /*
 MASTER LIST

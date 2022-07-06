@@ -5,6 +5,7 @@
 */
 
 import { customIssues, issueList, headingTests, imageTests, tableTests, customHeadingTests, customImageTests, linkTests, colorTests, labelTests } from "./issueList";
+// import { customIssues, issueList, headingTests, imageTests, tableTests, customHeadingTests, customImageTests, linkTests, colorTests, labelTests, customAbbreviationTests } from "./issueList";
 import { filteredIssues } from "./loadPlugin";
 
 const loadCustomFixes = () => {
@@ -25,8 +26,15 @@ const loadCustomFixes = () => {
                     testability = Issue.testability.WARNING;
                 }
 
-                CKEDITOR.tools.array.forEach( contentElement.find( data.selector ).toArray(), function( orig ) {
-                    if (!data.customSelector || data.customSelector(orig)){
+                let selectedIssues = contentElement.find( data.selector ).toArray();
+                // If creating an issue for abbreviations, set the entire content as the issue element
+                // if ( data.selector == 'span.acronym') {
+                //     console.log("Scan whole page");
+                //     selectedIssues.push(contentElement);
+                // }
+
+                CKEDITOR.tools.array.forEach( selectedIssues, function( orig ) {
+                    if (data.customSelector == null || data.customSelector(orig)){
                         issues.addItem( new Issue( {
                             originalElement: orig,
                             testability: testability,
@@ -36,7 +44,7 @@ const loadCustomFixes = () => {
                                 descr: data.desc
                             }
                         }, a11ychecker.Engine.prototype ) );
-                    } 
+                    }
                 });  
 
                 if (data.quickfixName) {
@@ -54,14 +62,17 @@ const loadCustomFixes = () => {
                     testLinks = filteredIssues["Links"],
                     testColor = filteredIssues["Color"],
                     testLabels = filteredIssues["Labels"],
+                    // testAbbrs = filteredIssues["Abbreviations"],
                     allFalse = !(testAll || testHeadings || testImages || testTables || testLinks || testColor || testLabels);
-                    
+                    // allFalse = !(testAll || testHeadings || testImages || testTables || testLinks || testColor || testLabels || testAbbrs);
+                // Remove custom abbreviations by default if not explicitly checked off
+                // if (!testAbbrs) { issues = issues.filter(element => !customAbbreviationTests.includes(element.id)); };
 
                 // If the user selected all, we don't need to filter issues.
                 // By default, if nothing is selected, let's just test for everything as well.
                 if (testAll || allFalse) { evt.sender.config.guideline = issueList; return; } 
 
-                
+
                 // Push the respecitve tests based on what the user selected.
                 // See the file 'issueList.js' to configure what should be tested.
                 if (testHeadings) { newGuidelines.push(...headingTests);  newCustomIssues.push(...customHeadingTests) };
@@ -70,6 +81,8 @@ const loadCustomFixes = () => {
                 if (testLinks)    { newGuidelines.push(...linkTests);  };
                 if (testColor)    { newGuidelines.push(...colorTests); };
                 if (testLabels)   { newGuidelines.push(...labelTests); };
+                // Add Abbreviations (must include "KINGUseLongDateFormat" to avoid bugs)
+                // if (testAbbrs)    { newGuidelines.push("KINGUseLongDateFormat"); newCustomIssues.push(...customAbbreviationTests); };
 
 
                 // Custom issue guidelines and the built-in guidelines can NOT be empty, otherwise terrible bugs will occur.
