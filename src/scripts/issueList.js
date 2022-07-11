@@ -78,7 +78,8 @@ var issueMapping = {
     tableComplexHasSummary:["AddTableSummary"],
     // colorFontContrast:["ColorContrastFix"],
     formButtonsHaveValue: ["FormButtonValue"],
-    labelMustBeUnique: ["labelMustBeUnique"]
+    // labelMustBeUnique: ["labelMustBeUnique"],
+    linkTextMustNotContainHttp: ["linkTextMustNotContainHttp"]
 
     //RemoveP:["RemoveEmptyPFix"]
 }
@@ -151,7 +152,7 @@ var customIssues = [
         id: 'linkTextMustNotContainHttp',
         title: 'There exists a link text that contains or starts with http(s)',
         desc: 'Complete URLs as text are not supposed to be used to link to a page as it causes the screen readers to read them twice',
-        quickfixName: ''
+        quickfixName: 'linkTextMustNotContainHttp'
     }
     // Do not push yet: This is for Acronyms
     // {
