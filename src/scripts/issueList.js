@@ -77,7 +77,8 @@ var issueMapping = {
     tableSummaryDoesNotDuplicateCaption:["ChangeTableSummary"],
     tableComplexHasSummary:["AddTableSummary"],
     // colorFontContrast:["ColorContrastFix"],
-    formButtonsHaveValue: ["FormButtonValue"]
+    formButtonsHaveValue: ["FormButtonValue"],
+    labelMustBeUnique: ["labelMustBeUnique"]
 
     //RemoveP:["RemoveEmptyPFix"]
 }
@@ -139,6 +140,19 @@ var customIssues = [
         desc: 'If you are reading this, this is a dummy class that is kept for development purposes. Please rename the class of this element.',
         quickfixName: ''
     },
+    {
+        selector: 'a',
+        customSelector: function(element){
+                let text  = element.getHtml();
+                if(text.indexOf("http://") == 0 || text.indexOf("https://") == 0)
+                    return text;
+            },
+        testability: 'Error',
+        id: 'linkTextMustNotContainHttp',
+        title: 'There exists a link text that contains or starts with http(s)',
+        desc: 'Complete URLs as text are not supposed to be used to link to a page as it causes the screen readers to read them twice',
+        quickfixName: ''
+    }
     // Do not push yet: This is for Acronyms
     // {
     //     selector: 'span.acronym',
