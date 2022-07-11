@@ -103,7 +103,7 @@ const loadPlugin = () => {
                 // },
                 {
                   type: 'html',
-                  html: '<footer style="font-size: 12px; margin-top: 20px;>Contact ckelibretext@ucdavis.edu for bug reporting.</footer>',
+                  html: '<footer style="font-size: 12px; margin-top: 0px;>Contact ckelibretext@ucdavis.edu for bug reporting.</footer>',
                 }
               ],
             },

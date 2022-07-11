@@ -139,19 +139,26 @@ var customIssues = [
         desc: 'If you are reading this, this is a dummy class that is kept for development purposes. Please rename the class of this element.',
         quickfixName: ''
     },
+    {
+        selector: '.box-legend:not(h5)',
+        customSelector: null,
+        testability: 'Error',
+        id: 'boxLegendHasHeader',
+        title: 'Headers for box legends should use an h5 tag',
+        desc: 'Box legends should use headers to maintain page organization',
+        quickfixName: 'BoxLegendHeaderFix'
+    },
     // Do not push yet: This is for Acronyms
     // {
     //     selector: 'span.acronym',
     //     customSelector: function(element) {
-    //         // Get inner text and parse into a list of words
-    //         let text = element.getHtml().split(" ");
-    //         let acronym = "";
-    //         text.forEach(function(word) {
-    //             if (word.toUpperCase() == word && word.length > 1 && word.indexOf(".") == -1) {
-    //                 acronym = word;
-    //             }
-    //         });
-    //         return acronym;
+    //         // All uppercase, >2 length, surrounded by whitespace (including &nbsp;), punctuation, or HTML tags (excluding span)
+    //         // Starting whitespace/'>' is included in regex match b/c positive lookbehind is not supported on Safari yet (July 2022)
+    //         const alphaRegex = /((>|\s)[A-Z]{2,}(?=(<\/(?!span)\w*?>|\s|\,|\.|(&nbsp))))/g
+
+    //         let acronyms = element.getHtml().match(alphaRegex);
+    //         console.log("Acronyms found: ", acronyms);
+    //         return acronyms ? acronyms.length : 0;
     //     },
     //     testability: 'Error',
     //     id: 'AcronymInTag',
@@ -159,7 +166,7 @@ var customIssues = [
     //     desc: 'Acronyms should be given a definition by adding a title to an abbr tag. Input "N/A" if this is not an acronym and should be ignored. If no input appears, press "Quick fix" to mark individual acronyms.',
     //     quickfixName: 'AcronymFix'
     // }
-    // custom color contrast NOT READY
+    // Do not push yet: custom color contrast
     /*{
         selector: 'p',
         customSelector: function(element){
@@ -278,12 +285,12 @@ var tableTests = ["tableWithBothHeadersUseScope","tableComplexHasSummary","table
 var linkTests = ["aLinksDontOpenNewWindow", "aAdjacentWithSameResourceShouldBeCombined","aImgAltNotRepetitive", "aSuspiciousLinkText"];
 var colorTests = ["KINGUseLongDateFormat"]; // change to "colorFontContrast" to re-enable color contrast checker
 var labelTests = ["inputTextHasLabel", "checkboxHasLabel", "radioHasLabel", "textareaHasAssociatedLabel", "selectHasAssociatedLabel", "passwordHasLabel", "fileHasLabel", "fieldsetHasLabel"];
-var customHeadingTests = ["ReservedHeaders"];
+var customHeadingTests = ["ReservedHeaders", "boxLegendHasHeader"];
 var customImageTests = ["ImgHasAltNew"];
-// var customAbbreviationTests = ["AcronymInTag"];
+var customAbbreviationTests = ["AcronymInTag"];
 
-export var issueList, issueMapping, customIssues, headingTests, imageTests, tableTests, linkTests, colorTests, labelTests, customHeadingTests, customImageTests;
-// export var issueList, issueMapping, customIssues, headingTests, imageTests, tableTests, linkTests, colorTests, labelTests, customHeadingTests, customImageTests, customAbbreviationTests;
+// export var issueList, issueMapping, customIssues, headingTests, imageTests, tableTests, linkTests, colorTests, labelTests, customHeadingTests, customImageTests;
+export var issueList, issueMapping, customIssues, headingTests, imageTests, tableTests, linkTests, colorTests, labelTests, customHeadingTests, customImageTests, customAbbreviationTests;
 
 /*
 MASTER LIST
