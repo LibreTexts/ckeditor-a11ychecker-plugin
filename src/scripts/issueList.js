@@ -140,38 +140,45 @@ var customIssues = [
         desc: 'If you are reading this, this is a dummy class that is kept for development purposes. Please rename the class of this element.',
         quickfixName: ''
     },
-    {
-        selector: '.box-legend:not(h5)',
-        customSelector: null,
-        testability: 'Error',
-        id: 'boxLegendHasHeader',
-        title: 'Headers for box legends should use an h5 tag',
-        desc: 'Box legends should use headers to maintain page organization',
-        quickfixName: 'BoxLegendHeaderFix'
-    },
-    {
-        selector: 'a',
-        customSelector: function(element){
-                let text  = element.getHtml();
-                if(text.indexOf("http://") == 0 || text.indexOf("https://") == 0)
-                    return text;
-            },
-        testability: 'Error',
-        id: 'linkTextMustNotContainHttp',
-        title: 'There exists a link text that contains or starts with http(s)',
-        desc: 'Complete URLs as text are not supposed to be used to link to a page as it causes the screen readers to read them twice',
-        quickfixName: 'linkTextMustNotContainHttp'
-    }
+    // {
+    //     selector: '.box-legend:not(h5)',
+    //     customSelector: null,
+    //     testability: 'Error',
+    //     id: 'boxLegendHasHeader',
+    //     title: 'Headers for box legends should use an h5 tag',
+    //     desc: 'Box legends should use headers to maintain page organization',
+    //     quickfixName: 'BoxLegendHeaderFix'
+    // },
+    // {
+    //     selector: 'a',
+    //     customSelector: function(element){
+    //             let text  = element.getHtml();
+    //             if(text.indexOf("http://") == 0 || text.indexOf("https://") == 0)
+    //                 return text;
+    //         },
+    //     testability: 'Error',
+    //     id: 'linkTextMustNotContainHttp',
+    //     title: 'There exists a link text that contains or starts with http(s)',
+    //     desc: 'Complete URLs as text are not supposed to be used to link to a page as it causes the screen readers to read them twice',
+    //     quickfixName: 'linkTextMustNotContainHttp'
+    // },
     // Do not push yet: This is for Acronyms
     // {
     //     selector: 'span.acronym',
     //     customSelector: function(element) {
+    //         if (element.getName() == 'span') {
+    //             return true;
+    //         }
     //         // All uppercase, >2 length, surrounded by whitespace (including &nbsp;), punctuation, or HTML tags (excluding span)
-    //         // Starting whitespace/'>' is included in regex match b/c positive lookbehind is not supported on Safari yet (July 2022)
+    //         // first char = whitespace or '>' bc positive lookbehind is not supported on Safari yet (July 2022)
     //         const alphaRegex = /((>|\s)[A-Z]{2,}(?=(<\/(?!span)\w*?>|\s|\,|\.|(&nbsp))))/g
 
     //         let acronyms = element.getHtml().match(alphaRegex);
-    //         console.log("Acronyms found: ", acronyms);
+    //         // Remove any acronyms that are already within an abbr tag
+    //         let acronymTags = element.find('abbr').toArray();
+    //         acronymTags = acronymTags.map( e => {return e.getHtml()});
+    //         acronyms = acronyms.filter( a => { return !acronymTags.includes(a.slice(1)) });
+    // 
     //         return acronyms ? acronyms.length : 0;
     //     },
     //     testability: 'Error',
@@ -301,10 +308,10 @@ var colorTests = ["KINGUseLongDateFormat"]; // change to "colorFontContrast" to 
 var labelTests = ["inputTextHasLabel", "checkboxHasLabel", "radioHasLabel", "textareaHasAssociatedLabel", "selectHasAssociatedLabel", "passwordHasLabel", "fileHasLabel", "fieldsetHasLabel"];
 var customHeadingTests = ["ReservedHeaders", "boxLegendHasHeader"];
 var customImageTests = ["ImgHasAltNew"];
-var customAbbreviationTests = ["AcronymInTag"];
+// var customAbbreviationTests = ["AcronymInTag"];
 
-// export var issueList, issueMapping, customIssues, headingTests, imageTests, tableTests, linkTests, colorTests, labelTests, customHeadingTests, customImageTests;
-export var issueList, issueMapping, customIssues, headingTests, imageTests, tableTests, linkTests, colorTests, labelTests, customHeadingTests, customImageTests, customAbbreviationTests;
+export var issueList, issueMapping, customIssues, headingTests, imageTests, tableTests, linkTests, colorTests, labelTests, customHeadingTests, customImageTests;
+// export var issueList, issueMapping, customIssues, headingTests, imageTests, tableTests, linkTests, colorTests, labelTests, customHeadingTests, customImageTests, customAbbreviationTests;
 
 /*
 MASTER LIST
