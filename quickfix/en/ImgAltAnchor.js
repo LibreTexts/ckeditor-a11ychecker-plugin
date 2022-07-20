@@ -14,7 +14,7 @@
 			var decorative = false;
 			
 			/**
-			 * Fixes the image with missing alt attribute.
+			 * Fixes the image within an anchor tag that is missing alt attribute.
 			 *
 			 * @constructor
 			 */
@@ -35,7 +35,17 @@
              ImgAltAnchor.prototype.constructor = ImgAltAnchor;
 
              ImgAltAnchor.prototype.display = function( form ) {
+				var dict = {
+					'Non-decorative': 'Non-decorative',
+					'Caption': 'Change alt text to caption'
+				}
 				form.setInputs( {
+					type: {
+						type: 'select',
+						label: 'Image type',
+						value: 'Non-decorative',
+						options: dict
+					},
 					alt: {
 						type: 'text',
 						label: this.lang.altLabel,
@@ -45,11 +55,35 @@
 			};
 
 			ImgAltAnchor.prototype.fix = function( formAttributes, callback ) {
-				var element = this.issue.element
+				let element = this.issue.element
+                let imgElement = element.findOne('img'); // First image within the anchor tag w/o alt text
+                if ( imgElement  ) {
 
-                var imgElement = element.getChild(0)
-                if ( imgElement ) {
-                    imgElement.setAttribute( 'alt', formAttributes.alt.trim() );
+						// Else if selected caption,
+						// check if img is under a figure parent first
+						// then set caption
+					if (formAttributes.type === 'Caption') {
+						imgElement.setAttribute( 'alt', "null" );
+						let parent = element.getParent();
+						var figcaption = parent.findOne('figcaption');
+						if (!figcaption) {
+							figcaption = new CKEDITOR.dom.element( 'figcaption' );
+						}
+						figcaption.appendText(formAttributes.alt.trim())
+						if ( parent.getName() != "figure") {
+							var figure = new CKEDITOR.dom.element( 'figure' );
+							var elementCopy = element.clone()
+							figure.append(elementCopy)
+							figure.append(figcaption)
+	
+							element.insertBeforeMe(figure);
+							element.remove()
+						} else {
+							parent.append(figcaption)
+						}
+					} else { // Non-decorative needs alt text
+						imgElement.setAttribute( 'alt', formAttributes.alt.trim() );
+					}
                 }
 
 				if ( callback ) {
@@ -58,18 +92,36 @@
 			};
 
 			ImgAltAnchor.prototype.validate = function( formAttributes ) {
-                var ret = [],
-                proposedAlt = formAttributes.alt + '';
+				if (formAttributes.type === 'Non-decorative' || formAttributes.type === 'Caption') {
+					var ret = [],
+					proposedAlt = formAttributes.alt + '',
+					imgElem = this.issue && this.issue.element,
+					lang = this.lang;
 
-                if ( !proposedAlt ) {
-                    ret.push( this.lang.errorEmpty );
-                }
+					// Test if the alt has only whitespaces.
+					if ( proposedAlt.match( emptyWhitespaceRegExp ) ) {
+						ret.push( lang.errorWhitespace );
+					}
 
-                if ( !ret.length ) {
-                    ret = ImgAltAnchor.prototype.validate.call( this, formAttributes );
-                }
+					// Testing against exceeding max length.
+					if ( ImgAltAnchor.altLengthLimit && proposedAlt.length > ImgAltAnchor.altLengthLimit && formAttributes.type === 'Non-decorative') {
+						var errorTemplate = new CKEDITOR.template( lang.errorTooLong );
 
-                return ret;
+						ret.push( errorTemplate.output( {
+							limit: ImgAltAnchor.altLengthLimit,
+							length: proposedAlt.length
+						} ) );
+					}
+
+					if ( imgElem ) {
+						var fileName = String( imgElem.getAttribute( 'src' ) ).split( '/' ).pop();
+						if ( fileName == proposedAlt ) {
+							ret.push( lang.errorSameAsFileName );
+						}
+					}
+					return ret;
+				}
+				return [];
 			};
 
 			ImgAltAnchor.prototype.lang = {"altLabel":"Alternative text","errorTooLong":"Alternative text is too long. It should be up to {limit} characters while your has {length}","errorWhitespace":"Alternative text/captions can not only contain whitespace characters/can not be empty","errorSameAsFileName":"Image alt should not be the same as the file name"};

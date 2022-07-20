@@ -58,7 +58,7 @@
 			ImgAlt.prototype.fix = function( formAttributes, callback ) {
 				var element = this.issue.element
 				console.log(element)
-				
+
 				// If selected decorative,
 				// we ignore the form and just set the alt image to blank
 				if (formAttributes.type === 'Decorative') {
@@ -108,7 +108,7 @@
 					}
 
 					// Testing against exceeding max length.
-					if ( ImgAlt.altLengthLimit && proposedAlt.length > ImgAlt.altLengthLimit ) {
+					if ( ImgAlt.altLengthLimit && proposedAlt.length > ImgAlt.altLengthLimit && formAttributes.type === 'Non-decorative') {
 						var errorTemplate = new CKEDITOR.template( lang.errorTooLong );
 
 						ret.push( errorTemplate.output( {

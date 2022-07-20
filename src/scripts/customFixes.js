@@ -28,7 +28,7 @@ const loadCustomFixes = () => {
 
                 let selectedIssues = contentElement.find( data.selector ).toArray();
                 // For abbreviations, set the entire content as an issue
-                // if ( data.selector == 'span.acronym' && !selectedIssues.length) {
+                // if ( data.id == 'AcronymInTag' && !selectedIssues.length) {
                 //     console.log("Scan Page");
                 //     selectedIssues.push(contentElement);
                 // }

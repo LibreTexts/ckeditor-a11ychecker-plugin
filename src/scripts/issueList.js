@@ -8,9 +8,9 @@
 var issueList = [
     "aLinksDontOpenNewWindow", 
     "aAdjacentWithSameResourceShouldBeCombined",
-    "aImgAltNotRepetitive",
+    // "aImgAltNotRepetitive", // Not mapped
     "aMustNotHaveJavascriptHref",
-    "documentVisualListsAreMarkedUp",
+    // "documentVisualListsAreMarkedUp", // Not mapped
     "imgAltNotEmptyInAnchor",
     "imgShouldNotHaveTitle",
     "pNotUsedAsHeader",
@@ -37,8 +37,8 @@ var issueList = [
     "fileHasLabel",
     "fieldsetHasLabel",
     "tableUsesCaption",
-    // "colorFontContrast",
-    'documentIDsMustBeUnique',
+    // "colorFontContrast", // Removed from live (7/22)
+    // 'documentIDsMustBeUnique', // Not mapped
     "formButtonsHaveValue"
     //"blockquoteNotUsedForIndentation",
 ];
@@ -48,7 +48,8 @@ var issueMapping = {
     aLinksDontOpenNewWindow:["NewWindowLink"],
     KINGUseLongDateFormat:["DateUnfold"],
     aAdjacentWithSameResourceShouldBeCombined:["AnchorsMerge"],
-    imgImportantNoSpacerAlt:["ImgAlt"],
+    aMustNotHaveJavascriptHref: ["aMustNotHaveJShref"],
+    imgImportantNoSpacerAlt:["ImgAlt"], // Not live
     imgWithEmptyAlt:["ImgAltNonEmpty"],
     imgAltNotEmptyInAnchor:["ImgAltAnchor"],
     imgAltIsDifferent:["ImgAlt"],
@@ -70,7 +71,7 @@ var issueMapping = {
     fileHasLabel:["FormFieldLabel"],
     fieldsetHasLabel:["FieldsetLegend"],
     aSuspiciousLinkText:["SuspiciousLinkFix"],
-    aMustHaveTitle:["LinkTitleFix"],
+    // aMustHaveTitle:["LinkTitleFix"], // Not live
     tableUsesCaption:["AddTableCaption"],
     tableDataShouldHaveTh:["TableHeaders"],
     tableWithBothHeadersUseScope:["TableScope"],
@@ -152,15 +153,15 @@ var customIssues = [
     // {
     //     selector: 'a',
     //     customSelector: function(element){
-    //             let text  = element.getHtml();
-    //             if(text.indexOf("http://") == 0 || text.indexOf("https://") == 0)
+    //             let text  = element.getText();
+    //             if( text.includes('/') )
     //                 return text;
     //         },
     //     testability: 'Error',
-    //     id: 'linkTextMustNotContainHttp',
+    //     id: 'linkMustNotContainHttp',
     //     title: 'There exists a link text that contains or starts with http(s)',
     //     desc: 'Complete URLs as text are not supposed to be used to link to a page as it causes the screen readers to read them twice',
-    //     quickfixName: 'linkTextMustNotContainHttp'
+    //     quickfixName: 'linkMustNotContainHttp'
     // },
     // Do not push yet: This is for Acronyms
     // {
@@ -169,6 +170,7 @@ var customIssues = [
     //         if (element.getName() == 'span') {
     //             return true;
     //         }
+
     //         // All uppercase, >2 length, surrounded by whitespace (including &nbsp;), punctuation, or HTML tags (excluding span)
     //         // first char = whitespace or '>' bc positive lookbehind is not supported on Safari yet (July 2022)
     //         const alphaRegex = /((>|\s)[A-Z]{2,}(?=(<\/(?!span)\w*?>|\s|\,|\.|(&nbsp))))/g
@@ -176,7 +178,7 @@ var customIssues = [
     //         let acronyms = element.getHtml().match(alphaRegex);
     //         // Remove any acronyms that are already within an abbr tag
     //         let acronymTags = element.find('abbr').toArray();
-    //         acronymTags = acronymTags.map( e => {return e.getHtml()});
+    //         acronymTags = acronymTags.map( e => {return e.getHtml().slice()});
     //         acronyms = acronyms.filter( a => { return !acronymTags.includes(a.slice(1)) });
     // 
     //         return acronyms ? acronyms.length : 0;
