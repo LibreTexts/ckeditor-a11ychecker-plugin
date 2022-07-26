@@ -37,6 +37,7 @@ var issueList = [
     "fileHasLabel",
     "fieldsetHasLabel",
     "tableUsesCaption",
+    // "labelMustBeUnique",
     // "colorFontContrast", // Removed from live (7/22)
     // 'documentIDsMustBeUnique', // Not mapped
     "formButtonsHaveValue"
@@ -79,7 +80,7 @@ var issueMapping = {
     tableComplexHasSummary:["AddTableSummary"],
     // colorFontContrast:["ColorContrastFix"],
     formButtonsHaveValue: ["FormButtonValue"],
-    // labelMustBeUnique: ["labelMustBeUnique"],
+    labelMustBeUnique: ["labelMustBeUnique"]
 
     //RemoveP:["RemoveEmptyPFix"]
 }
@@ -150,19 +151,19 @@ var customIssues = [
         desc: 'Box legends should use headers to maintain page organization',
         quickfixName: 'BoxLegendHeaderFix'
     },
-    // {
-    //     selector: 'a',
-    //     customSelector: function(element){
-    //             let text  = element.getText();
-    //             if( text.includes('/') )
-    //                 return text;
-    //         },
-    //     testability: 'Error',
-    //     id: 'linkMustNotContainHttp',
-    //     title: 'There exists a link text that contains or starts with http(s)',
-    //     desc: 'Complete URLs as text are not supposed to be used to link to a page as it causes the screen readers to read them twice',
-    //     quickfixName: 'linkMustNotContainHttp'
-    // },
+    {
+        selector: 'a',
+        customSelector: function(element){
+                let text  = element.getText();
+                if( text.includes('/') || text.includes('@'))
+                    return text;
+            },
+        testability: 'Error',
+        id: 'linkMustNotContainHttp',
+        title: 'There exists a link text that contains or starts with http(s)',
+        desc: 'Complete URLs as text are not supposed to be used to link to a page as it causes the screen readers to read them twice',
+        quickfixName: 'linkMustNotContainHttp'
+    },
     // Do not push yet: This is for Acronyms and Chemical Compounds
     // {
     //     selector: 'span.chemical-compound',
@@ -192,7 +193,6 @@ var customIssues = [
     //             }
     //         }
     //         console.log("words: ", words);
-
     //         let chem_com = words.filter( (w) => { return chemRegex.test(w) });
     //         console.log("chemical compounds: ", chem_com);
     //         // Remove any acronyms that are already within an abbr tag
@@ -211,31 +211,6 @@ var customIssues = [
     //     desc: 'Chemical compounds should be given a definition by adding a title to an abbr tag. Input "N/A" if this should be ignored. If no input appears, press "Quick fix" to mark individual compounds.',
     //     quickfixName: ''
     // },
-    // {
-    //     selector: 'span.acronym',
-    //     customSelector: function(element) {
-    //         if (element.getName() == 'span') {
-    //             return true;
-    //         }
-
-    //         // All uppercase, >2 length, surrounded by whitespace (including &nbsp;), punctuation, or HTML tags (excluding span)
-    //         // first char = whitespace or '>' bc positive lookbehind is not supported on Safari yet (July 2022)
-    //         const alphaRegex = /((>|\s)[A-Z]{2,}(?=(<\/(?!span)\w*?>|\s|\,|\.|(&nbsp))))/g
-
-    //         let acronyms = element.getHtml().match(alphaRegex);
-    //         // Remove any acronyms that are already within an abbr tag
-    //         let acronymTags = element.find('abbr').toArray();
-    //         acronymTags = acronymTags.map( e => {return e.getHtml().slice()});
-    //         acronyms = acronyms.filter( a => { return !acronymTags.includes(a.slice(1)) });
-    // 
-    //         return acronyms ? acronyms.length : 0;
-    //     },
-    //     testability: 'Error',
-    //     id: 'AcronymInTag',
-    //     title: 'This page contains at least one acronym that should be within an abbr tag',
-    //     desc: 'Acronyms should be given a definition by adding a title to an abbr tag. Input "N/A" if this is not an acronym and should be ignored. If no input appears, press "Quick fix" to mark individual acronyms.',
-    //     quickfixName: 'AcronymFix'
-    // }
     // Do not push yet: custom color contrast
     /*{
         selector: 'p',
