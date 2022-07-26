@@ -37,6 +37,7 @@ var issueList = [
     "fileHasLabel",
     "fieldsetHasLabel",
     "tableUsesCaption",
+    "labelMustBeUnique",
     // "colorFontContrast", // Removed from live (7/22)
     // 'documentIDsMustBeUnique', // Not mapped
     "formButtonsHaveValue"
@@ -79,7 +80,7 @@ var issueMapping = {
     tableComplexHasSummary:["AddTableSummary"],
     // colorFontContrast:["ColorContrastFix"],
     formButtonsHaveValue: ["FormButtonValue"],
-    // labelMustBeUnique: ["labelMustBeUnique"],
+    labelMustBeUnique: ["labelMustBeUnique"]
 
     //RemoveP:["RemoveEmptyPFix"]
 }
@@ -150,19 +151,19 @@ var customIssues = [
     //     desc: 'Box legends should use headers to maintain page organization',
     //     quickfixName: 'BoxLegendHeaderFix'
     // },
-    // {
-    //     selector: 'a',
-    //     customSelector: function(element){
-    //             let text  = element.getText();
-    //             if( text.includes('/') )
-    //                 return text;
-    //         },
-    //     testability: 'Error',
-    //     id: 'linkMustNotContainHttp',
-    //     title: 'There exists a link text that contains or starts with http(s)',
-    //     desc: 'Complete URLs as text are not supposed to be used to link to a page as it causes the screen readers to read them twice',
-    //     quickfixName: 'linkMustNotContainHttp'
-    // },
+    {
+        selector: 'a',
+        customSelector: function(element){
+                let text  = element.getText();
+                if( text.includes('/') || text.includes('@'))
+                    return text;
+            },
+        testability: 'Error',
+        id: 'linkMustNotContainHttp',
+        title: 'There exists a link text that contains or starts with http(s)',
+        desc: 'Complete URLs as text are not supposed to be used to link to a page as it causes the screen readers to read them twice',
+        quickfixName: 'linkMustNotContainHttp'
+    },
     // Do not push yet: This is for Acronyms
     // {
     //     selector: 'span.acronym',

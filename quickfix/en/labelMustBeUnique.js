@@ -21,6 +21,15 @@
 
 			labelMustBeUnique.prototype = new QuickFix();
 			labelMustBeUnique.prototype.constructor = labelMustBeUnique;
+
+			labelMustBeUnique.prototype.display = function( form ) {
+				form.setInputs( {
+					label: {
+						type: 'text',
+						label: this.lang.labelText
+					}
+				} );
+			};
 			
 
 			/**s
@@ -30,10 +39,12 @@
 			 * as a first parameter.
 			 */
 			 labelMustBeUnique.prototype.fix = function( formAttributes, callback ) {
-				var currElement = this.issue.element;
-				var duplicate = currElement.getNext();
-				
+				var element = this.issue.element;
+				var duplicate = element.getNext();
+
 				duplicate.remove();
+
+				element.setHtml(formAttributes.label);
 
     
 				if ( callback ) {
@@ -41,7 +52,19 @@
 				}
 			};
 
-			labelMustBeUnique.prototype.lang = {};
+			labelMustBeUnique.prototype.validate = function( formAttributes ) {
+				var proposedLabel = formAttributes.label,
+					ret = [];
+
+				// Test if the label has only whitespaces.
+				if ( !proposedLabel || proposedLabel.match( emptyWhitespaceRegExp ) ) {
+					ret.push( this.lang.errorEmpty );
+				}
+
+				return ret;
+			};
+
+			labelMustBeUnique.prototype.lang = {"labelText":"Label","errorEmpty":"Label can not be empty"};
 			// Add to our quick fixes
 			CKEDITOR.plugins.a11ychecker.quickFixes.add( 'en/labelMustBeUnique', labelMustBeUnique);
 		}
