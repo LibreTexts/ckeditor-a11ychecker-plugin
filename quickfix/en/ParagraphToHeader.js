@@ -58,7 +58,7 @@
 			 * @returns {Number} Number ranging from `1` to `6`.
 			 */
 			ParagraphToHeader.prototype._getPreferredLevel = function( editor ) {
-				var ret = 1,
+				var ret = 2, // default is h2 because h1 should be the page title
 					editable = editor.editable(),
 					headerTagRegExp = /^h[1-6]$/i,
 					range = new CKEDITOR.dom.range( editable.getDocument() ),
@@ -71,11 +71,42 @@
 
 				while ( ( prevElement = walker.previous() ) ) {
 					if ( prevElement.getName && prevElement.getName().match( headerTagRegExp ) ) {
-						ret = Number( prevElement.getName()[ 1 ] ) + 1;
+						// Skip box legends if issueElement is not contained by the same div
+						// aka issueElement and prevElement are not siblings
+						if (prevElement.getParent().find('.box-legend') && !this.issue.element.getCommonAncestor(prevElement).equals(prevElement.getParent()))
+							continue;
+						/* Suggest the next level: 
+							- the previous header is NOT issueElement's sibling
+							- the previous header is immediately before the issueElement
+							- issue & previousElement are siblings AND prevElement is a box-legend
+						*/
+						// console.log("prevElement: ", prevElement);
+						// console.log("Siblings: ", prevElement.getParent().getChildren().toArray());
+						let precedingIssueElem = this.issue.element.getPrevious();
+						// console.log("preceding element ", precedingIssueElem.getText());
+						while ( precedingIssueElem && !precedingIssueElem.getText().trim()) {
+							precedingIssueElem = precedingIssueElem.getPrevious();
+							// console.log("get preceding element ", precedingIssueElem);
+						}
+						// console.log("preceding actual element ", precedingIssueElem);
+
+						if ( !prevElement.getParent().getChildren().toArray().some( s => s.equals(prevElement) )
+							|| prevElement.hasClass('box-legend') || precedingIssueElem.equals(prevElement)
+						) { 
+							// console.log("next level: ", prevElement);
+							ret = Number( prevElement.getName()[ 1 ] ) + 1;
+							// console.log("ret ", ret);
+						}
+						/* Suggest the same level:
+							- previous header and issueElement are siblings (excluding above)
+						*/
+						else {
+							// console.log("same level");
+							ret = Number( prevElement.getName()[ 1 ] );
+						}
 						break;
 					}
 				}
-
 				// WE can't return a higher value than 7.
 				return Math.min( ret, 6 );
 			};
@@ -113,7 +144,7 @@
 			ParagraphToHeader.prototype._getPossibleLevels = function( editor ) {
 				var tags = ( editor.config.format_tags || '' ).split( ';' ),
 					ret = {
-						min: 1,
+						min: 2,
 						max: 6
 					},
 					i;

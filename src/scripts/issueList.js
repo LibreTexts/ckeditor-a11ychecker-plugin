@@ -71,7 +71,7 @@ var issueMapping = {
     fileHasLabel:["FormFieldLabel"],
     fieldsetHasLabel:["FieldsetLegend"],
     aSuspiciousLinkText:["SuspiciousLinkFix"],
-    // aMustHaveTitle:["LinkTitleFix"], // Not live
+    // aMustHaveTitle:["LinkTitleFix"], // Not live (a tags shouldn't have titles)
     tableUsesCaption:["AddTableCaption"],
     tableDataShouldHaveTh:["TableHeaders"],
     tableWithBothHeadersUseScope:["TableScope"],
@@ -141,15 +141,15 @@ var customIssues = [
         desc: 'If you are reading this, this is a dummy class that is kept for development purposes. Please rename the class of this element.',
         quickfixName: ''
     },
-    // {
-    //     selector: '.box-legend:not(h5)',
-    //     customSelector: null,
-    //     testability: 'Error',
-    //     id: 'boxLegendHasHeader',
-    //     title: 'Headers for box legends should use an h5 tag',
-    //     desc: 'Box legends should use headers to maintain page organization',
-    //     quickfixName: 'BoxLegendHeaderFix'
-    // },
+    {
+        selector: '.box-legend:not(h5)',
+        customSelector: null,
+        testability: 'Error',
+        id: 'boxLegendHasHeader',
+        title: 'Headers for box legends should use an h5 tag',
+        desc: 'Box legends should use headers to maintain page organization',
+        quickfixName: 'BoxLegendHeaderFix'
+    },
     // {
     //     selector: 'a',
     //     customSelector: function(element){
@@ -163,7 +163,54 @@ var customIssues = [
     //     desc: 'Complete URLs as text are not supposed to be used to link to a page as it causes the screen readers to read them twice',
     //     quickfixName: 'linkMustNotContainHttp'
     // },
-    // Do not push yet: This is for Acronyms
+    // Do not push yet: This is for Acronyms and Chemical Compounds
+    // {
+    //     selector: 'span.chemical-compound',
+    //     customSelector: function(element) {
+    //         if (element.getName() == 'span') {
+    //             return true;
+    //         }
+    //         // console.log("Editor: ", CKEDITOR.document.getBody());
+    //         // All uppercase, >2 length, surrounded by whitespace (including &nbsp;), punctuation, or HTML tags (excluding span)
+    //         const chemRegex = /(<sup>)|(<sub>)|(([A-Z][a-z]?){2,})/g;
+    //         // const chemDelim = /\s|(?:<(?!(?:\/?sup)|(?:\/?sub))(?:.)*?>)/g; // delimiter to split 
+    //         const chemDelim = /(\s)|(<(?!(\/?sup)|(\/?sub))(.)*?>)/g; // delimiter to split 
+    //         const chemElemRegex = /[^HBCNOFPSKVYIWU]/g; // Alphabet excluding any single char elements 
+    //         console.log("text: ", element.getHtml());
+    //         let words = element.getHtml().split(chemDelim).filter(w => w);
+    //         console.log("words: ", words);
+    //         // Merge split elements 
+    //         for (let i = 0; i < words.length; i++) {
+    //             if (words[i].includes('<sub') || words[i].includes('<sup')) {
+    //                 let next = 1, concatWord = words[i];
+    //                 while (!concatWord.includes('>')) {
+    //                     concatWord += words[i+next];
+    //                     next++;
+    //                 }
+    //                 words.splice(i, next, concatWord);
+    //                 i += next-1;
+    //             }
+    //         }
+    //         console.log("words: ", words);
+
+    //         let chem_com = words.filter( (w) => { return chemRegex.test(w) });
+    //         console.log("chemical compounds: ", chem_com);
+    //         // Remove any acronyms that are already within an abbr tag
+    //         let abbrTags = element.find('abbr').toArray();
+    //         abbrTags.concat(element.find('span').toArray());
+    //         abbrTags = abbrTags.map( e => {return e.getHtml().slice()});
+    //         chem_com = chem_com.filter( a => { 
+    //             return !abbrTags.includes(a) && a.match(/[A-Z]{2,}/g) ? !chemElemRegex.test(a.match(/[A-Z]/g).join('')) : true;
+    //         });
+    //         console.log("chemical compounds filtered: ", chem_com);
+    //         return chem_com ? chem_com.length : 0;
+    //     },
+    //     testability: 'Error',
+    //     id: 'ChemAbbrInTags',
+    //     title: 'This page contains at least one chemical compound that should be within an abbr tag',
+    //     desc: 'Chemical compounds should be given a definition by adding a title to an abbr tag. Input "N/A" if this should be ignored. If no input appears, press "Quick fix" to mark individual compounds.',
+    //     quickfixName: ''
+    // },
     // {
     //     selector: 'span.acronym',
     //     customSelector: function(element) {
@@ -310,7 +357,7 @@ var colorTests = ["KINGUseLongDateFormat"]; // change to "colorFontContrast" to 
 var labelTests = ["inputTextHasLabel", "checkboxHasLabel", "radioHasLabel", "textareaHasAssociatedLabel", "selectHasAssociatedLabel", "passwordHasLabel", "fileHasLabel", "fieldsetHasLabel"];
 var customHeadingTests = ["ReservedHeaders", "boxLegendHasHeader"];
 var customImageTests = ["ImgHasAltNew"];
-// var customAbbreviationTests = ["AcronymInTag"];
+// var customAbbreviationTests = ["ChemAbbrInTags", "AcronymInTag"];
 
 export var issueList, issueMapping, customIssues, headingTests, imageTests, tableTests, linkTests, colorTests, labelTests, customHeadingTests, customImageTests;
 // export var issueList, issueMapping, customIssues, headingTests, imageTests, tableTests, linkTests, colorTests, labelTests, customHeadingTests, customImageTests, customAbbreviationTests;

@@ -36,7 +36,8 @@
 
              ImgAltAnchor.prototype.display = function( form ) {
 				var dict = {
-					'Non-decorative': 'Non-decorative',
+					'Non-decorative': 'Non-decorative',					
+					'Decorative': 'Decorative (select if image is already discussed on page)',
 					'Caption': 'Change alt text to caption'
 				}
 				form.setInputs( {
@@ -58,12 +59,16 @@
 				let element = this.issue.element
                 let imgElement = element.findOne('img'); // First image within the anchor tag w/o alt text
                 if ( imgElement  ) {
+					// If selected decorative,
+					// we ignore the form and just set the alt image to blank
+					if (formAttributes.type === 'Decorative') {
+						element.setAttribute( 'alt', " " );
 
-						// Else if selected caption,
-						// check if img is under a figure parent first
-						// then set caption
-					if (formAttributes.type === 'Caption') {
-						imgElement.setAttribute( 'alt', "null" );
+					// Else if selected caption,
+					// check if img is under a figure parent first
+					// then set caption
+					} else if (formAttributes.type === 'Caption') {
+						imgElement.setAttribute( 'alt', " " );
 						let parent = element.getParent();
 						var figcaption = parent.findOne('figcaption');
 						if (!figcaption) {

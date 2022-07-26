@@ -27,9 +27,9 @@ const loadCustomFixes = () => {
                 }
 
                 let selectedIssues = contentElement.find( data.selector ).toArray();
-                // For abbreviations, set the entire content as an issue
-                // if ( data.id == 'AcronymInTag' && !selectedIssues.length) {
-                //     console.log("Scan Page");
+                // For abbreviations, set the entire content as an issue if no span.acronym tags already exist on the page
+                // if ( customAbbreviationTests.includes(data.id) && !selectedIssues.length) {
+                //     console.log("Scan Page: ", contentElement);
                 //     selectedIssues.push(contentElement);
                 // }
 
@@ -65,12 +65,17 @@ const loadCustomFixes = () => {
                     // testAbbrs = filteredIssues["Abbreviations"],
                     allFalse = !(testAll || testHeadings || testImages || testTables || testLinks || testColor || testLabels);
                     // allFalse = !(testAll || testHeadings || testImages || testTables || testLinks || testColor || testLabels || testAbbrs);
-                // Remove custom abbreviations by default if not explicitly checked off
-                // if (!testAbbrs) { issues = issues.filter(element => !customAbbreviationTests.includes(element.id)); };
+
+
 
                 // If the user selected all, we don't need to filter issues.
                 // By default, if nothing is selected, let's just test for everything as well.
-                if (testAll || allFalse) { evt.sender.config.guideline = issueList; return; } 
+                if (testAll || allFalse) { 
+                    // Remove custom abbreviations by default if not explicitly checked off
+                    // if (!testAbbrs) { issues = issues.filter(element => !customAbbreviationTests.includes(element.id)); };
+                    evt.sender.config.guideline = issueList;
+                    return; 
+                } 
 
 
                 // Push the respecitve tests based on what the user selected.

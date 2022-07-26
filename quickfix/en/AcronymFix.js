@@ -27,34 +27,41 @@
 			// Parses the content into a list of acronyms (occurs BEFORE quickfix is clicked)
 			// Returns null if the element is span.acronym
 			function findAcronyms( issue ) {
-				const alpha = /^[A-Z]{2,}(?=(<\/(?!span)\w*?|\s|\,|\.|(&nbsp)))?/g; // Uppercase letters with length of at least 2 from beginning (^) to end ($)
+				const alpha = /^[A-Z]{2,}(?=(<\/(?!abbr)\w*?|<\/(?!span)\w*?|\s|\,|\.|(&nbsp)))?/g; // Uppercase letters with length of at least 2 from beginning (^) to end ($)
 				let issueElement = issue.element;
 				if (issueElement.getName() == 'span') { return null };
 
 				// Get inner text and parse into a list of words (span.acronym will only have one word)
 				let text = issueElement.getHtml().split(/(\s|>)/g),
 					newText = [];
-				console.log("Text, ", text);
-				// Find all the unique acronyms in issueElement
-				let uniqueAcronyms = text.filter( (word, index) => {
-					return word.match(alpha) && text.indexOf(word.match(/^[A-Z]{2,}/g)) == index;
-					// return word.match(alpha) && text.indexOf(word) == index;
-				});
-				console.log("unique ", uniqueAcronyms);
 
-				// Wrap all acronyms in a span tag (with acronym class if first occurence)
-				text.forEach( function(word, index) {
-					newText[index] = word;
-					if ( uniqueAcronyms.includes(word) ) {
-						let acronym = CKEDITOR.document.createElement('span');
-						acronym.setHtml(word);
-						if ( text.indexOf(word) == index ) {
-							acronym.addClass('acronym');
+				// Find all the unique acronyms in issueElement
+				let taggedAcronyms = issueElement.find('span, abbr').toArray();
+				taggedAcronyms = taggedAcronyms.map( e => { return e.getHtml().match(/[A-Z]{2,}/g) })
+											.filter( e => { return e })
+											.map( e => { return e[0] });
+				let uniqueAcronyms = [];
+				text.forEach( (word, i) => {
+					newText[i] = word;
+					let acronym = word.match(alpha);
+					if (acronym && !taggedAcronyms.find (a => {return acronym == a})) {
+						let acronymSpan = CKEDITOR.document.createElement('span');
+						acronymSpan.setHtml(acronym);
+						if (!uniqueAcronyms.find( a => {return acronym == a})) { // First occurance of the acronym
+							acronymSpan.addClass('acronym');
+						}						
+						uniqueAcronyms.push(acronym[0]);
+						acronym = acronymSpan.getOuterHtml();
+						if (word.search(/[^A-Z]/g) > 0) {
+							acronym += word.slice(word.search(/[^A-Z]/g));
 						}
-						newText[index] = acronym.getOuterHtml();
+						newText[i] = acronym;
 					}
 				});
-				issueElement.setHtml(newText.join(" "));
+
+				issueElement.setHtml(newText.join(""));
+				// console.log("Acronyms Found: ", uniqueAcronyms);
+
 				return uniqueAcronyms;
 			}
 
@@ -65,11 +72,7 @@
 			AcronymFix.prototype.display = function( form ) {
 				let acronymList = findAcronyms(this.issue);
 				let acronym = this.issue.element.getText();
-				if (acronymList) { 
-					// If scanning whole page, only allow input if there's one acronym
-					acronym = acronymList[0];
-					if (acronymList.length > 1) { return; }
-				}
+				if (this.issue.element.getName() != 'span') { return; }
 
 				form.setInputs( {
 					acronym: {
@@ -88,9 +91,10 @@
 			 AcronymFix.prototype.fix = function( formAttributes, callback ) {
 				let issueElement = this.issue.element;
 				// Only allows acronymFix if issueElement is a single acronym
-				if (formAttributes.acronym) {
+
+				if (formAttributes.acronym && issueElement.getName() == 'span') {
 					issueElement.removeClass('acronym');
-					if (formAttributes.acronym.indexOf('N/A') == -1)  {
+					if (formAttributes.acronym.trim().toUpperCase() != 'N/A')  {
 						issueElement.renameNode('abbr');
 						issueElement.setAttribute('title', formAttributes.acronym);
 					}
