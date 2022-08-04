@@ -155,15 +155,42 @@ var customIssues = [
         selector: 'a',
         customSelector: function(element){
                 let text  = element.getText();
-                if( text.includes('/') || text.includes('@'))
+                if(text.includes('/'))
                     return text;
             },
         testability: 'Error',
         id: 'linkMustNotContainHttp',
         title: 'There exists a link text that contains or starts with http(s)',
-        desc: 'Complete URLs as text are not supposed to be used to link to a page as it causes the screen readers to read them twice',
+        desc: "URL's are inaccessible to screenreaders due to the long text link, shorten to a link description for accessibility purposes. If leaving libretext, the checker will list site automatically.",
         quickfixName: 'linkMustNotContainHttp'
     },
+    {
+        selector: 'a[href*="mailto"]',
+        customSelector: function(element){
+                let text  = element.getText();
+                if(text.includes('@'))
+                    return text;
+            },
+        testability: 'Error',
+        id: 'mailToLinkMustNotHaveEmail',
+        title: 'There exists a link displaying the whole email address',
+        desc: "A 'mail-to' link must not contain the whole email address as its text as it already links to it. Please input name only, email will be placed before the name.",
+        quickfixName: 'mailToLinkMustNotHaveEmail'
+    },
+    {
+        selector: 'iframe',
+        customSelector: function(element){
+                if(element.hasAttribute('title') == false)
+                    return element;
+                else if(element.getAttribute('title') == '')
+                    return element;
+            },
+        testability: 'Error',
+        id: 'iframeMustHaveTitle',
+        title: 'The iframe does not contain a title',
+        desc: "All iframes must contain a title for the screen reader to provide information about the video.",
+        quickfixName: 'iframeMustHaveTitle'
+    }
     // Do not push yet: This is for Acronyms and Chemical Compounds
     // {
     //     selector: 'span.chemical-compound',

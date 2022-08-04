@@ -41,12 +41,35 @@
 			 */
 			 linkMustNotContainHttp.prototype.fix = function( formAttributes, callback ) {
                 var element = this.issue.element;
-				// console.log(element);
+				var parent = element.getParent();
+				let text = element.getText();
 
-				// var html = element.getHtml();
-				// console.log(html);
+				if(text.includes('libretext'))
+					element.setHtml(formAttributes.link);
 
-				element.setHtml(formAttributes.link);
+				else{
+					if(text.includes('http')){
+						var parts = text.split("://");
+						var tp = parts[1].split("/");
+						element.setHtml(formAttributes.link);
+						element.appendText(' (');
+						element.appendText(tp[0]);
+						element.appendText(')');
+					}
+					else{
+						var tp = text.split("/");
+						console.log(tp);
+						element.setHtml(formAttributes.link);
+						element.appendText(' (');
+						element.appendText(tp[0]);
+						element.appendText(')');
+					}
+				}
+				
+				// TODO: If it is a Libretext site then it just replaces the text
+				// 		 Else if it is  a third party site then it takes the primary domain and places it in a bracket beside the text
+
+				
 
 				if ( callback ) {
 					callback( this );
