@@ -42,6 +42,7 @@
 			 linkMustNotContainHttp.prototype.fix = function( formAttributes, callback ) {
                 var element = this.issue.element;
 				var parent = element.getParent();
+				var span = new CKEDITOR.dom.element('span');
 				let text = element.getText();
 
 				if(text.includes('libretext'))
@@ -52,17 +53,28 @@
 						var parts = text.split("://");
 						var tp = parts[1].split("/");
 						element.setHtml(formAttributes.link);
-						element.appendText(' (');
-						element.appendText(tp[0]);
-						element.appendText(')');
+						span.insertAfter(element);
+						span.appendText(' [');
+						span.appendText(tp[0]);
+						span.appendText(']');
+					}
+					else if(text.includes('www.')){
+						var parts = text.split("www.");
+						var tp = parts[1].split("/");
+						element.setHtml(formAttributes.link);
+						span.insertAfter(element);
+						span.appendText(' [');
+						span.appendText(tp[0]);
+						span.appendText(']');
 					}
 					else{
 						var tp = text.split("/");
 						console.log(tp);
 						element.setHtml(formAttributes.link);
-						element.appendText(' (');
-						element.appendText(tp[0]);
-						element.appendText(')');
+						span.insertAfter(element);
+						span.appendText(' [');
+						span.appendText(tp[0]);
+						span.appendText(']');
 					}
 				}
 				

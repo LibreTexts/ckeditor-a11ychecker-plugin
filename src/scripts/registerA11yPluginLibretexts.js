@@ -7,7 +7,7 @@
 import registerPlugin from './plugin';
 
 LibreEditor.a11yPlugin = (config) => {
-  console.log("August 4, 2022 - Abhi");   // Log the date of your push to prod for testing purposes
+  console.log("August 15, 2022 - Abhi");   // Log the date of your push to prod for testing purposes
   registerPlugin();                       // Calling the main function to register a11ychecker
   config.toolbar[12].push('a11yButton');  // Pushing the plugin's icon onto the CKEditor's toolbar
 };
