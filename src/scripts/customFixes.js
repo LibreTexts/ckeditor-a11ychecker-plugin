@@ -4,8 +4,8 @@
 * This is also where filtering happens. See filterIssues().
 */
 
-import { customIssues, issueList, headingTests, imageTests, tableTests, customHeadingTests, customImageTests, linkTests, colorTests, labelTests } from "./issueList";
-// import { customIssues, issueList, headingTests, imageTests, tableTests, customHeadingTests, customImageTests, linkTests, colorTests, labelTests, customAbbreviationTests } from "./issueList";
+// import { customIssues, issueList, headingTests, imageTests, tableTests, customHeadingTests, customImageTests, linkTests, colorTests, labelTests } from "./issueList";
+import { customIssues, issueList, headingTests, imageTests, tableTests, customHeadingTests, customImageTests, linkTests, colorTests, labelTests, customAbbreviationTests } from "./issueList";
 import { filteredIssues } from "./loadPlugin";
 
 const loadCustomFixes = () => {
@@ -28,10 +28,10 @@ const loadCustomFixes = () => {
 
                 let selectedIssues = contentElement.find( data.selector ).toArray();
                 // For abbreviations, set the entire content as an issue if no span.acronym tags already exist on the page
-                // if ( customAbbreviationTests.includes(data.id) && !selectedIssues.length) {
-                //     console.log("Scan Page: ", contentElement);
-                //     selectedIssues.push(contentElement);
-                // }
+                if ( customAbbreviationTests.includes(data.id) && !selectedIssues.length) {
+                    // console.log("Scan Page: ", contentElement);
+                    selectedIssues.push(contentElement);
+                }
 
                 CKEDITOR.tools.array.forEach( selectedIssues, function( orig ) {
                     if (data.customSelector == null || data.customSelector(orig)){
@@ -62,9 +62,9 @@ const loadCustomFixes = () => {
                     testLinks = filteredIssues["Links"],
                     testColor = filteredIssues["Color"],
                     testLabels = filteredIssues["Labels"],
-                    // testAbbrs = filteredIssues["Abbreviations"],
-                    allFalse = !(testAll || testHeadings || testImages || testTables || testLinks || testColor || testLabels);
-                    // allFalse = !(testAll || testHeadings || testImages || testTables || testLinks || testColor || testLabels || testAbbrs);
+                    testAbbrs = filteredIssues["Abbreviations"],
+                    // allFalse = !(testAll || testHeadings || testImages || testTables || testLinks || testColor || testLabels);
+                    allFalse = !(testAll || testHeadings || testImages || testTables || testLinks || testColor || testLabels || testAbbrs);
 
 
 
@@ -72,7 +72,7 @@ const loadCustomFixes = () => {
                 // By default, if nothing is selected, let's just test for everything as well.
                 if (testAll || allFalse) { 
                     // Remove custom abbreviations by default if not explicitly checked off
-                    // if (!testAbbrs) { issues = issues.filter(element => !customAbbreviationTests.includes(element.id)); };
+                    if (!testAbbrs) { issues = issues.filter(element => !customAbbreviationTests.includes(element.id)); };
                     evt.sender.config.guideline = issueList;
                     return; 
                 } 
@@ -86,8 +86,8 @@ const loadCustomFixes = () => {
                 if (testLinks)    { newGuidelines.push(...linkTests);  };
                 if (testColor)    { newGuidelines.push(...colorTests); };
                 if (testLabels)   { newGuidelines.push(...labelTests); };
-                // Add Abbreviations (must include "KINGUseLongDateFormat" to avoid bugs)
-                // if (testAbbrs)    { newGuidelines.push("KINGUseLongDateFormat"); newCustomIssues.push(...customAbbreviationTests); };
+                // Add Abbreviations (must include "KINGUseCurrencyAsSymbol" to avoid bugs)
+                if (testAbbrs)    { newGuidelines.push("KINGUseCurrencyAsSymbol"); newCustomIssues.push(...customAbbreviationTests); };
 
 
                 // Custom issue guidelines and the built-in guidelines can NOT be empty, otherwise terrible bugs will occur.

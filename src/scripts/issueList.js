@@ -190,7 +190,7 @@ var customIssues = [
         title: 'The iframe does not contain a title',
         desc: "All iframes must contain a title for the screen reader to provide information about the video.",
         quickfixName: 'iframeMustHaveTitle'
-    }
+    },
     // Do not push yet: This is for Acronyms and Chemical Compounds
     // {
     //     selector: 'span.chemical-compound',
@@ -238,6 +238,55 @@ var customIssues = [
     //     desc: 'Chemical compounds should be given a definition by adding a title to an abbr tag. Input "N/A" if this should be ignored. If no input appears, press "Quick fix" to mark individual compounds.',
     //     quickfixName: ''
     // },
+    {
+        selector: 'span.acronym',
+        customSelector: function(element) {
+            if (element.getName() == 'span') { return true; }
+            // All uppercase, >2 length, surrounded by whitespace (including &nbsp;), punctuation, or HTML tags (excluding span)
+            // first char = whitespace or '>' bc positive lookbehind is not supported on Safari yet (July 2022)
+            // const alphaRegex = /((>|\s)[A-Z]{2,}(?=(<\/(?!span)\w*?>|\s|\,|\.|(&nbsp))))/g
+            const alphaRegex = /((>|\s)[A-Z]{2,}(?=(<\/\w*?>|\s|\,|\.|(&nbsp))))/g
+            // const alphaRegex = /(((?<!(sup)|(sub))>|\s)[A-Z]{2,}(?=(<(?!(sub))\/\w*?>|\s|\,|\.|\W|(&nbsp))))/g
+            const acronymRegex = /[A-Z]{2,}/g
+
+            let acronyms = element.getHtml().match(alphaRegex);
+            // If no acronyms are found -> no filtering necessary
+            if (!acronyms) { return 0; }
+
+            // Ignore Chemical Compounds
+            const chemTags = ['sub', 'sup']
+            chemTags.forEach( tag => {
+                let tags = element.find(tag).toArray();
+                if (tags) {
+                    tags = tags.map( e => { 
+                        let html = e.getParent().getHtml().match(acronymRegex);
+                        return html ? html.join() : "";
+                    });
+                    acronyms = acronyms.filter( a => { return !tags.includes(a.slice(1)) });
+                }
+            });
+
+            // Remove any acronyms that should be ignored
+            const ignoreTags = ['abbr', 'span.acronym-ignore', 'span.acronym', 'a'];
+            ignoreTags.forEach( tag => {
+                let tags = element.find(tag).toArray();
+                if (tags) {
+                    tags = tags.map( e => { 
+                        let html = e.getHtml().match(acronymRegex);
+                        return html ? html.join() : "";
+                    });
+                    acronyms = acronyms.filter( a => { return !tags.includes(a.slice(1)) });
+                }
+            });
+            // console.log("IssueList", acronyms)
+            return acronyms ? acronyms.length : 0;
+        },
+        testability: 'Error',
+        id: 'AcronymInTag',
+        title: 'This page contains at least one acronym that should be given a definition',
+        desc: 'Acronyms should be given a definition at its first appearance on the page. Input "N/A" if this is not an acronym and should be ignored, like chemical notation. If no input appears, press "Quick fix".',
+        quickfixName: 'AcronymFix'
+    }
     // Do not push yet: custom color contrast
     /*{
         selector: 'p',
@@ -359,10 +408,11 @@ var colorTests = ["KINGUseLongDateFormat"]; // change to "colorFontContrast" to 
 var labelTests = ["inputTextHasLabel", "checkboxHasLabel", "radioHasLabel", "textareaHasAssociatedLabel", "selectHasAssociatedLabel", "passwordHasLabel", "fileHasLabel", "fieldsetHasLabel"];
 var customHeadingTests = ["ReservedHeaders", "boxLegendHasHeader"];
 var customImageTests = ["ImgHasAltNew"];
-// var customAbbreviationTests = ["ChemAbbrInTags", "AcronymInTag"];
+var customAbbreviationTests = ["AcronymInTag"];
+var customAbbreviationTests = ["ChemAbbrInTags", "AcronymInTag"];
 
-export var issueList, issueMapping, customIssues, headingTests, imageTests, tableTests, linkTests, colorTests, labelTests, customHeadingTests, customImageTests;
-// export var issueList, issueMapping, customIssues, headingTests, imageTests, tableTests, linkTests, colorTests, labelTests, customHeadingTests, customImageTests, customAbbreviationTests;
+// export var issueList, issueMapping, customIssues, headingTests, imageTests, tableTests, linkTests, colorTests, labelTests, customHeadingTests, customImageTests;
+export var issueList, issueMapping, customIssues, headingTests, imageTests, tableTests, linkTests, colorTests, labelTests, customHeadingTests, customImageTests, customAbbreviationTests;
 
 /*
 MASTER LIST

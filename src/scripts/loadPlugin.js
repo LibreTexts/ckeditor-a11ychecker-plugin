@@ -92,15 +92,15 @@ const loadPlugin = () => {
                     $('#testLabels').focus();
                   }
                 },
-                // {
-                //   type: 'checkbox',
-                //   label: '8. Abbreviations (excluded by default)',
-                //   id: 'testAbbrs',
-                //   labelStyle: 'margin-left: 30px;',
-                //   focus: function() {
-                //     $('#testAbbrs').focus();
-                //   }
-                // },
+                {
+                  type: 'checkbox',
+                  label: '8. Abbreviations (excluded by default)',
+                  id: 'testAbbrs',
+                  labelStyle: 'margin-left: 30px;',
+                  focus: function() {
+                    $('#testAbbrs').focus();
+                  }
+                },
                 {
                   type: 'html',
                   html: '<footer style="font-size: 12px; margin-top: 0px;>Contact ckelibretext@ucdavis.edu for bug reporting.</footer>',
@@ -122,7 +122,7 @@ const loadPlugin = () => {
               "Links":    menu.getValueOf( 'a11yTOC', 'testLinks'    ),
               "Color":    menu.getValueOf( 'a11yTOC', 'testColor'    ),
               "Labels":   menu.getValueOf( 'a11yTOC', 'testLabels'   ),
-              // "Abbreviations": menu.getValueOf('a11yTOC', 'testAbbrs')
+              "Abbreviations": menu.getValueOf('a11yTOC', 'testAbbrs')
             };
 
             editor.execCommand('a11ychecker')
@@ -132,8 +132,8 @@ const loadPlugin = () => {
           // Used for easier keyboard access when selecting tests.
           onLoad() {
             const menu = this;
-            const key_test_map = { '1': 'testAll', '2': 'testHeadings', '3': 'testImages', '4': 'testTables', '5': 'testLinks', '6': 'testColor', '7': 'testLabels'};
-            // const key_test_map = { '1': 'testAll', '2': 'testHeadings', '3': 'testImages', '4': 'testTables', '5': 'testLinks', '6': 'testColor', '7': 'testLabels', '8': 'testAbbrs'};
+            // const key_test_map = { '1': 'testAll', '2': 'testHeadings', '3': 'testImages', '4': 'testTables', '5': 'testLinks', '6': 'testColor', '7': 'testLabels'};
+            const key_test_map = { '1': 'testAll', '2': 'testHeadings', '3': 'testImages', '4': 'testTables', '5': 'testLinks', '6': 'testColor', '7': 'testLabels', '8': 'testAbbrs'};
             CKEDITOR.document.on("keydown", function(evt) {
 
               // First, get the key that was pressed, and check if the key is valid (a key from 1-6 was pressed).
