@@ -76,7 +76,7 @@ const loadPlugin = () => {
                 },
                 {
                   type: 'checkbox',
-                  label: '6. Color Contrast',
+                  label: '6. Color Contrast (excluded by default)',
                   id: 'testColor',
                   labelStyle: 'margin-left: 30px;',
                   focus: function() {
@@ -85,7 +85,7 @@ const loadPlugin = () => {
                 },
                 {
                   type: 'checkbox',
-                  label: '7. Labels',
+                  label: '7. Labels (excluded by default)',
                   id: 'testLabels',
                   labelStyle: 'margin-left: 30px;',
                   focus: function() {
