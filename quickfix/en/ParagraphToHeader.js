@@ -25,6 +25,9 @@
 			ParagraphToHeader.prototype.constructor = ParagraphToHeader;
 
 			ParagraphToHeader.prototype.getTargetName = function( formAttributes ) {
+				if (formAttributes.level == 'h7') {
+					return 'p'
+				}
 				return formAttributes.level;
 			};
 
@@ -48,6 +51,13 @@
 					that._removeBoldTag();
 					callback( that );
 				} );
+
+				// Header 7 
+				if (this.issue.element.getName() == 'p') {
+					this.issue.element.setAttribute('role', 'heading');
+					this.issue.element.setAttribute('aria-level', '7');
+				}
+				console.log("Issue element: ", this.issue.element);
 			};
 
 			/**
@@ -107,8 +117,9 @@
 						break;
 					}
 				}
-				// WE can't return a higher value than 7.
-				return Math.min( ret, 6 );
+				// WE can't return a higher value than 7. 
+				// * Edit to include header level 7 using aria
+				return Math.min( ret, 7 );
 			};
 
 			/**
@@ -145,7 +156,7 @@
 				var tags = ( editor.config.format_tags || '' ).split( ';' ),
 					ret = {
 						min: 2,
-						max: 6
+						max: 7
 					},
 					i;
 

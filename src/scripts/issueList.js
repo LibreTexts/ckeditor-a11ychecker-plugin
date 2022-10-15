@@ -78,7 +78,7 @@ var issueMapping = {
     tableWithBothHeadersUseScope:["TableScope"],
     tableSummaryDoesNotDuplicateCaption:["ChangeTableSummary"],
     tableComplexHasSummary:["AddTableSummary"],
-    // colorFontContrast:["ColorContrastFix"],
+    colorFontContrast:["ColorContrastFix"],
     formButtonsHaveValue: ["FormButtonValue"],
     labelMustBeUnique: ["labelMustBeUnique"]
 
@@ -404,12 +404,12 @@ var headingTests = ["pNotUsedAsHeader", "headerH1","headerH2","headerH3","header
 var imageTests = ["imgShouldNotHaveTitle","imgAltIsDifferent","imgAltIsTooLong","imgWithEmptyAlt", "imgAltNotEmptyInAnchor"];
 var tableTests = ["tableWithBothHeadersUseScope","tableComplexHasSummary","tableSummaryDoesNotDuplicateCaption", "tableUsesCaption"];
 var linkTests = ["aLinksDontOpenNewWindow", "aAdjacentWithSameResourceShouldBeCombined","aImgAltNotRepetitive", "aSuspiciousLinkText"];
-var colorTests = ["KINGUseLongDateFormat"]; // change to "colorFontContrast" to re-enable color contrast checker
+var colorTests = ["colorFontContrast"]; // change to "colorFontContrast" to re-enable color contrast checker
 var labelTests = ["inputTextHasLabel", "checkboxHasLabel", "radioHasLabel", "textareaHasAssociatedLabel", "selectHasAssociatedLabel", "passwordHasLabel", "fileHasLabel", "fieldsetHasLabel"];
 var customHeadingTests = ["ReservedHeaders", "boxLegendHasHeader"];
 var customImageTests = ["ImgHasAltNew"];
 var customAbbreviationTests = ["AcronymInTag"];
-var customAbbreviationTests = ["ChemAbbrInTags", "AcronymInTag"];
+// var customAbbreviationTests = ["ChemAbbrInTags", "AcronymInTag"];
 
 // export var issueList, issueMapping, customIssues, headingTests, imageTests, tableTests, linkTests, colorTests, labelTests, customHeadingTests, customImageTests;
 export var issueList, issueMapping, customIssues, headingTests, imageTests, tableTests, linkTests, colorTests, labelTests, customHeadingTests, customImageTests, customAbbreviationTests;

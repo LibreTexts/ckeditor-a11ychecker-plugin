@@ -42,6 +42,12 @@
 					index = 0;
 
 				textArray.forEach((item) => { 
+					let imgElem = item.find('img').toArray();
+					console.log(imgElem);
+					imgElem.forEach( img => {
+						img.appendTo(element);
+					});
+
 					if (item.$.textContent) { 
 						index += item.$.textContent.length;
 						newTextContent = newTextContent.substring(0, index) + "<br/>" + newTextContent.substring(index, newTextContent.length);
@@ -50,7 +56,7 @@
 					item.remove(); 
 				})
 				
-				element.appendHtml(`<figcaption>${newTextContent}</figcaption>`)
+				element.appendHtml(`<figcaption>${newTextContent}</figcaption>`);
 
 				// Callback
 				if ( callback ) {

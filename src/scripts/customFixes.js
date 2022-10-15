@@ -73,6 +73,11 @@ const loadCustomFixes = () => {
                 if (testAll || allFalse) { 
                     // Remove custom abbreviations by default if not explicitly checked off
                     if (!testAbbrs) { issues = issues.filter(element => !customAbbreviationTests.includes(element.id)); };
+
+                    // Remove color contrast and label issues by default
+                    if (!testColor) { issues = issues.filter(element => !colorTests.includes(element.id)); };
+                    if (!testLabels) { issues = issues.filter(element => !labelTests.includes(element.id)); };
+
                     evt.sender.config.guideline = issueList;
                     return; 
                 } 
@@ -86,15 +91,16 @@ const loadCustomFixes = () => {
                 if (testLinks)    { newGuidelines.push(...linkTests);  };
                 if (testColor)    { newGuidelines.push(...colorTests); };
                 if (testLabels)   { newGuidelines.push(...labelTests); };
-                // Add Abbreviations (must include "KINGUseCurrencyAsSymbol" to avoid bugs)
-                if (testAbbrs)    { newGuidelines.push("KINGUseCurrencyAsSymbol"); newCustomIssues.push(...customAbbreviationTests); };
+                // Add Abbreviations (must include "headerH1" to avoid bugs)
+                // Note: "headerH1" should never appear on LibreTexts pages because only the title can be H1
+                if (testAbbrs)    { newGuidelines.push("headerH1"); newCustomIssues.push(...customAbbreviationTests); };
 
 
                 // Custom issue guidelines and the built-in guidelines can NOT be empty, otherwise terrible bugs will occur.
                 // This is to really ensure they're never empty by having them check for dummy & barely used tests just in case
                 // they are somehow empty.
                 if (newCustomIssues == []) { newCustomIssues.push("DummyID");             };
-                if (newGuidelines   == []) { newGuidelines.push("KINGUseLongDateFormat"); };
+                if (newGuidelines   == []) { newGuidelines.push("headerH1"); };
 
                 // Filter!
                 /*
